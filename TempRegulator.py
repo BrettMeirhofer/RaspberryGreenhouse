@@ -30,7 +30,8 @@ def handle_temp():
                 sensor = adafruit_ahtx0.AHTx0(tca[port])
                 sensor_temp = round(sensor.temperature, 1)
                 sensor_humd = round(sensor.relative_humidity, 1)
-                writer.writerow([str(port), (sensor_temp * (9/5)) + 32, sensor_humd,
+                temp_f = round((sensor_temp * (9/5)) + 32,2)
+                writer.writerow([str(port), temp_f, sensor_humd,
                                  datetime.datetime.now().strftime("%H%M")])
                 temps.append(sensor_temp)
             except ValueError:
