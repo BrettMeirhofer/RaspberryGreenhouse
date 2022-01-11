@@ -5,6 +5,7 @@ import requests
 import csv
 import logging
 import datetime
+import sys
 
 
 def send_email(message, sender, sender_pw, receivers):
@@ -57,4 +58,10 @@ def create_logger():
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+
+    def my_handler(type, value, tb):
+        logger.exception("Uncaught exception: {0}".format(str(value)))
+
+    # Install exception handler
+    sys.excepthook = my_handler
     return logger
