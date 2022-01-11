@@ -1,0 +1,8 @@
+{
+  "temp-too-high": false,
+  "temp-too-low": false,
+  "water-low": false,
+  "sender": "",
+  "sender-pw": "",
+  "receivers": ["", ""]
+}
