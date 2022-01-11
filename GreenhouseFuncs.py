@@ -7,16 +7,16 @@ import logging
 import datetime
 
 
-def send_email(message):
+def send_email(message, sender, sender_pw, receivers):
     port = 465  # For SSL
 
     # Create a secure SSL context
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login("brettmeirhoferpython@gmail.com", "Virtue35")
-        server.sendmail("brettmeirhoferpython@gmail.com", "tonyameirhofer@gmail.com", message)
-        server.sendmail("brettmeirhoferpython@gmail.com", "brettmeirhofer@gmail.com", message)
+        server.login(sender, sender_pw)
+        for receiver in receivers:
+            server.sendmail(sender, receiver, message)
 
 
 # Used to control a tasmota relay on the local network

@@ -3,9 +3,13 @@ import adafruit_ahtx0
 import adafruit_tca9548a
 import datetime
 import GreenhouseFuncs
+import os
+import json
 
 
 def handle_temp():
+    config_file = open(os.path.join(os.path.dirname(__file__), "Config.json"))
+    config_dict = json.loads(config_file.read())
     data_file, writer = GreenhouseFuncs.get_data_file("Temp")
     logger = GreenhouseFuncs.create_logger()
     heater_temp = 24
