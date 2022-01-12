@@ -46,7 +46,7 @@ def handle_temp():
         logger.info("Heater enabled")
     else:
         logger.info("Heater disabled")
-    data_row.insert(int(enable_heater), 1)
+    data_row.insert(1, int(enable_heater))
     writer.writerow(data_row)
 
     # Need a way to remember errors to prevent email spamming
