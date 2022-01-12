@@ -64,11 +64,7 @@ def handle_temp():
 if __name__ == '__main__':
     handle_temp()
 
-# Handle Water Level on timer
-# Check Moisture Level
-# Check light level
-# Send Emails upon Error
-# If critical error write to a json file to shut subsystem down for later runs. Requires manual reset
-# Manual reset of JSON file to re-enable subsystem
-# Replacing writing to info log with POSTing to Django server
-# Switch on a GPIO instead of
+# Add Hot/Cold Emails
+# Add temp toggle to data
+# Move all sensor data at the same time to the same line
+# Add Data emails
