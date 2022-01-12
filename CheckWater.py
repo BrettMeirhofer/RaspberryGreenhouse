@@ -14,6 +14,7 @@ def record_water():
     GPIO.setmode(GPIO.BCM)
     x = sensor.Measurement(trig, echo)
     distance_warm = x.raw_distance()
+    distance_warm = round(distance_warm * 0.393701, 2)
     current_time = datetime.datetime.now().strftime("%H%M")
     writer.writerow([current_time, distance_warm])
     data_file.close()
