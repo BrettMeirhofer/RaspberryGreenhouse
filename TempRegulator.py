@@ -24,6 +24,7 @@ def handle_temp():
     port_names = ["Upper T/H", "Lower T/H", "System T/H"]
 
     temps = []
+    data_row = [datetime.datetime.now().strftime("%H%M")]
     try:
         for index, port in enumerate(multi_ports):
             try:
@@ -31,8 +32,7 @@ def handle_temp():
                 sensor_temp = round(sensor.temperature, 1)
                 sensor_humd = round(sensor.relative_humidity, 1)
                 temp_f = round((sensor_temp * (9/5)) + 32,2)
-                writer.writerow([str(port), temp_f, sensor_humd,
-                                 datetime.datetime.now().strftime("%H%M")])
+                data_row.extend([temp_f, sensor_humd])
                 temps.append(sensor_temp)
             except ValueError:
                 logger.error("Sensor {} is offline".format(port_names[index]))
@@ -46,6 +46,8 @@ def handle_temp():
         logger.info("Heater enabled")
     else:
         logger.info("Heater disabled")
+    data_row.insert(int(enable_heater), 1)
+    writer.writerow(data_row)
 
     # Need a way to remember errors to prevent email spamming
     """
@@ -65,6 +67,4 @@ if __name__ == '__main__':
     handle_temp()
 
 # Add Hot/Cold Emails
-# Add temp toggle to data
-# Move all sensor data at the same time to the same line
 # Add Data emails
