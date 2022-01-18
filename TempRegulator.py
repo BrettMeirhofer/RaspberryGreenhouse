@@ -34,8 +34,7 @@ def handle_temp():
                 sensor = adafruit_ahtx0.AHTx0(tca[port])
                 sensor_temp = round(sensor.temperature, 1)
                 sensor_humd = round(sensor.relative_humidity, 1)
-                temp_f = round((sensor_temp * (9/5)) + 32, 2)
-                sensor_data.extend([temp_f, sensor_humd])
+                sensor_data.extend([sensor_temp, sensor_humd])
                 temps.append(sensor_temp)
             except ValueError:
                 logger.error("Sensor {} is offline".format(port_names[index]))
