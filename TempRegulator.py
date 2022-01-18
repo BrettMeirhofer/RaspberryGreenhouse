@@ -5,6 +5,7 @@ import datetime
 import GreenhouseFuncs
 import os
 import json
+from SendData import send_sensor_data
 
 
 def handle_temp():
@@ -24,30 +25,34 @@ def handle_temp():
     port_names = ["Upper T/H", "Lower T/H", "System T/H"]
 
     temps = []
+    web_json = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M")}
     data_row = [datetime.datetime.now().strftime("%H%M")]
+    sensor_data = []
     try:
         for index, port in enumerate(multi_ports):
             try:
                 sensor = adafruit_ahtx0.AHTx0(tca[port])
                 sensor_temp = round(sensor.temperature, 1)
                 sensor_humd = round(sensor.relative_humidity, 1)
-                temp_f = round((sensor_temp * (9/5)) + 32,2)
-                data_row.extend([temp_f, sensor_humd])
+                temp_f = round((sensor_temp * (9/5)) + 32, 2)
+                sensor_data.extend([temp_f, sensor_humd])
                 temps.append(sensor_temp)
             except ValueError:
                 logger.error("Sensor {} is offline".format(port_names[index]))
     except OSError:
         logger.error("Multiplexer is offline")
 
+    web_json["readings"] = sensor_data
     avg_temp = (temps[0] + temps[1]) / 2
     enable_heater = avg_temp < heater_temp
+    web_json["heater"] = int(enable_heater)
     GreenhouseFuncs.toggle_relay(1, enable_heater)
-    if enable_heater:
-        logger.info("Heater enabled")
-    else:
-        logger.info("Heater disabled")
+    data_row.append(sensor_data)
     data_row.insert(1, int(enable_heater))
     writer.writerow(data_row)
+
+    send_sensor_data(web_json, "/admin/Temp/")
+
 
     # Need a way to remember errors to prevent email spamming
     """
