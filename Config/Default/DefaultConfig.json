@@ -1,8 +1,8 @@
 {
-  "watering_duration": "30",
-  "heater_temp": "24",
-  "too_hot": "38",
-  "too_cold": "4.5",
-  "reservoir_height": "30.48",
-  "water_sensor_dist": "17.78"
+  "watering_duration": 30,
+  "heater_temp": 24,
+  "too_hot": 38,
+  "too_cold": 4.5,
+  "reservoir_height": 30.48,
+  "water_sensor_dist": 17.78
 }
