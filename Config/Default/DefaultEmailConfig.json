@@ -4,7 +4,5 @@
   "water-low": false,
   "sender": "",
   "sender-pw": "",
-  "receivers": ["", ""],
-  "website_url": "",
-  "website_token": ""
+  "receivers": ["", ""]
 }

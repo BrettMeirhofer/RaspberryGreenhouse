@@ -1,4 +1,4 @@
-import os
+from os import path
 import smtplib
 import ssl
 import requests
@@ -6,6 +6,9 @@ import csv
 import logging
 import datetime
 import sys
+import json
+import shutil
+from os.path import exists
 
 
 def send_email(message, sender, sender_pw, receivers):
@@ -29,9 +32,9 @@ def toggle_relay(relay_id, state):
 
 def get_data_file(file_name):
     data_file_path = file_name + datetime.datetime.now().strftime("%Y%m%d") + ".csv"
-    data_file_path = os.path.join(os.path.dirname(__file__), "Data", data_file_path)
+    data_file_path = path.join(path.dirname(__file__), "../Data", data_file_path)
     headers = ["Sensor", "Temp", "Humd", "Datetime"]
-    if os.path.exists(data_file_path):
+    if path.exists(data_file_path):
         mode = "a"
     else:
         mode = "w"
@@ -39,7 +42,7 @@ def get_data_file(file_name):
     data_file = open(data_file_path, mode)
     writer = csv.writer(data_file)
 
-    if not os.path.exists(data_file_path):
+    if not path.exists(data_file_path):
         writer.writerow(headers)
 
     return data_file, writer
@@ -51,9 +54,9 @@ def create_logger():
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
     # set up the logfile handler
-    log_path = os.path.join(os.path.dirname(__file__), "Logs")
+    log_path = path.join(path.dirname(__file__), "../Logs")
     log_time = datetime.datetime.now()
-    log_filename = os.path.join(log_path, "TempHum-%s.log" % log_time.strftime("%Y%m%d-%H%M%S"))
+    log_filename = path.join(log_path, "TempHum-%s.log" % log_time.strftime("%Y%m%d-%H%M%S"))
     fh = logging.FileHandler(log_filename)
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)
@@ -65,3 +68,16 @@ def create_logger():
     # Install exception handler
     sys.excepthook = my_handler
     return logger
+
+
+def open_config_dict(file_name):
+    base_path = path.join(path.dirname(path.dirname(__file__)), "Config")
+    config_path = path.join(base_path, file_name)
+    if not exists(config_path):
+        default_path = path.join(base_path, "Default", "Default" + file_name)
+        shutil.copy(default_path, config_path)
+
+    with open(config_path) as config_file:
+        config_dict = json.loads(config_file.read())
+
+    return config_dict

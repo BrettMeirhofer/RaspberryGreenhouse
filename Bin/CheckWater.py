@@ -1,15 +1,17 @@
 import RPi.GPIO as GPIO
 from hcsr04sensor import sensor
-import GreenhouseFuncs
 import datetime
 from SendData import send_sensor_data
+import GreenhouseFuncs as GHF
 
 
+# Records water level and sends it to a remote web server
 def record_water():
+    config_dict = GHF.open_config_dict("Config.json")
     trig = 4
     echo = 17
-    reservoir_height = 30.48
-    sensor_height = 17.78
+    reservoir_height = config_dict["reservoir_height"]
+    sensor_height = config_dict["water_sensor_dist"]
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     measure_object = sensor.Measurement(trig, echo)
@@ -22,3 +24,5 @@ def record_water():
 
 if __name__ == '__main__':
     record_water()
+
+# Water level low email
