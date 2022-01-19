@@ -17,3 +17,6 @@ A series of python scripts that can be scheduled using crontab on a raspberry pi
 - Automatic circulation/venting control
 - Daily image capture/upload
 - Testing
+- Github Actions automatic testing
+- Sprouting detection
+- Trimming detection/Email
