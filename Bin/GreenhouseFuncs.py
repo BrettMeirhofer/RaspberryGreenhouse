@@ -25,7 +25,8 @@ def send_email(message, sender, sender_pw, receivers):
 
 # Used to control a tasmota relay on the local network
 def toggle_relay(relay_id, state):
-    ip_address = "192.168.1.179"
+    config_dict = open_config_dict("Config.json")
+    ip_address = config_dict["relay_ip"]
     target_url = "http://{}/cm?cmnd=Power{}%20{}".format(ip_address, relay_id, state)
     requests.get(url=target_url)
 
