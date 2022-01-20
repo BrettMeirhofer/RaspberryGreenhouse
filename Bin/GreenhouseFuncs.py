@@ -61,8 +61,8 @@ def create_logger():
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    def my_handler(type, value, tb):
-        logger.exception("Uncaught exception: {0}".format(str(value)))
+    def my_handler(exc_type, exc_value, exc_traceback):
+        logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
 
     # Install exception handler
     sys.excepthook = my_handler
