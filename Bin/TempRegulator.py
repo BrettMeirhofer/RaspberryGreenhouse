@@ -5,6 +5,7 @@ import datetime
 import GreenhouseFuncs as GHF
 from SendData import send_sensor_data
 import RPi.GPIO as GPIO
+import requests
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -16,8 +17,8 @@ def handle_temp():
     GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
-    multi_ports = [0, 1, 2]
-    port_names = ["Upper T/H", "Lower T/H", "System T/H"]
+    multi_ports = [1, 2]
+    port_names = ["Lower T/H", "System T/H"]
 
     temps = []
     web_json = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M"), "readings": []}
@@ -34,8 +35,7 @@ def handle_temp():
     except OSError:
         logger.error("Multiplexer is offline")
 
-    avg_temp = (temps[0] + temps[1]) / 2
-    enable_heater = avg_temp < config_dict["heater_temp"]
+    enable_heater = temps[0] < config_dict["heater_temp"]
     web_json["heater"] = int(enable_heater)
     GHF.toggle_relay(1, enable_heater)
     send_sensor_data(web_json, "/admin/Temp/")
