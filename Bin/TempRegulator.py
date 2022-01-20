@@ -12,7 +12,6 @@ import RPi.GPIO as GPIO
 def handle_temp():
     config_dict = GHF.open_config_dict("Config.json")
     logger = GHF.create_logger()
-    GPIO.setmode(GPIO.BOARD)
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
