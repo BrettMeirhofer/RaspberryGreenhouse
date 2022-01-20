@@ -13,27 +13,21 @@ import requests
 def handle_temp():
     config_dict = GHF.open_config_dict("Config.json")
     logger = GHF.create_logger()
-    GPIO.setup(27, GPIO.OUT)
-    GPIO.output(27, GPIO.HIGH)
+    #GPIO.setup(27, GPIO.OUT)
+    #GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
     multi_ports = [1, 2]
-    port_names = ["Lower T/H", "System T/H"]
 
     temps = []
     web_json = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M"), "readings": []}
-    try:
-        for index, port in enumerate(multi_ports):
-            try:
-                sensor = adafruit_ahtx0.AHTx0(tca[port])
-                sensor_temp = round(sensor.temperature, 1)
-                sensor_humd = round(sensor.relative_humidity, 1)
-                web_json["readings"].extend([sensor_temp, sensor_humd])
-                temps.append(sensor_temp)
-            except ValueError:
-                logger.error("Sensor {} is offline".format(port_names[index]))
-    except OSError:
-        logger.error("Multiplexer is offline")
+
+    for index, port in enumerate(multi_ports):
+        sensor = adafruit_ahtx0.AHTx0(tca[port])
+        sensor_temp = round(sensor.temperature, 1)
+        sensor_humd = round(sensor.relative_humidity, 1)
+        web_json["readings"].extend([sensor_temp, sensor_humd])
+        temps.append(sensor_temp)
 
     enable_heater = temps[0] < config_dict["heater_temp"]
     web_json["heater"] = int(enable_heater)

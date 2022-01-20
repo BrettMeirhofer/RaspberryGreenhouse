@@ -1,6 +1,7 @@
 Adafruit-Blinka==6.17.0
 adafruit-circuitpython-busdevice==5.1.1
 adafruit-circuitpython-tca9548a==0.5.1
+adafruit-circuitpython-ahtx0==1.0.8
 Adafruit-PlatformDetect==3.19.1
 Adafruit-PureIO==1.1.9
 certifi==2021.10.8
@@ -15,3 +16,4 @@ pyusb==1.2.1
 requests==2.27.0
 twilio==7.4.0
 urllib3==1.26.7
+hcsr04sensor==1.6.2
