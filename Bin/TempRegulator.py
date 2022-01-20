@@ -6,6 +6,7 @@ import GreenhouseFuncs as GHF
 from SendData import send_sensor_data
 import RPi.GPIO as GPIO
 import requests
+import json
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -32,6 +33,7 @@ def handle_temp():
     enable_heater = temps[0] < config_dict["heater_temp"]
     web_json["heater"] = int(enable_heater)
     GHF.toggle_relay(1, enable_heater)
+    logger.error(json.dumps(web_json))
     send_sensor_data(web_json, "/admin/Temp/")
     GPIO.cleanup()
     # Need a way to remember errors to prevent email spamming
