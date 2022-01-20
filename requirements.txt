@@ -6,6 +6,8 @@ Adafruit-PureIO==1.1.9
 certifi==2021.10.8
 charset-normalizer==2.0.10
 idna==3.3
+numpy==1.22.1
+opencv-python==4.5.5.62
 pyftdi==0.53.3
 PyJWT==2.3.0
 pyserial==3.5

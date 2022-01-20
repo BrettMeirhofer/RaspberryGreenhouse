@@ -55,8 +55,7 @@ def create_logger():
 
     # set up the logfile handler
     log_path = path.join(path.dirname(__file__), "../Logs")
-    log_time = datetime.datetime.now()
-    log_filename = path.join(log_path, "TempHum-%s.log" % log_time.strftime("%Y%m%d-%H%M%S"))
+    log_filename = path.join(log_path, "TempRegulatorErrors.log")
     fh = logging.FileHandler(log_filename)
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)

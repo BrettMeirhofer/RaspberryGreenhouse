@@ -4,6 +4,7 @@ import adafruit_tca9548a
 import datetime
 import GreenhouseFuncs as GHF
 from SendData import send_sensor_data
+import RPi.GPIO as GPIO
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -11,7 +12,9 @@ from SendData import send_sensor_data
 def handle_temp():
     config_dict = GHF.open_config_dict("Config.json")
     logger = GHF.create_logger()
-
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(27, GPIO.OUT)
+    GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
     multi_ports = [0, 1, 2]
@@ -37,7 +40,7 @@ def handle_temp():
     web_json["heater"] = int(enable_heater)
     GHF.toggle_relay(1, enable_heater)
     send_sensor_data(web_json, "/admin/Temp/")
-
+    GPIO.cleanup()
     # Need a way to remember errors to prevent email spamming
     """
     if avg_temp > config_dict["too_hot"]:
