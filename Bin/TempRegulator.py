@@ -32,9 +32,18 @@ def handle_temp():
 
     enable_heater = temps[0] < config_dict["heater_temp"]
     web_json["heater"] = int(enable_heater)
-    GHF.toggle_relay(1, enable_heater)
-    send_sensor_data(web_json, "/admin/Temp/")
     GPIO.cleanup()
+
+    try:
+        send_sensor_data(web_json, "/admin/Temp/")
+    except requests.exceptions.RequestException:
+        logger.error("TempRegulator Data Upload Failed")
+
+    try:
+        GHF.toggle_relay(1, enable_heater)
+    except requests.exceptions.RequestException:
+        logger.error("Relay Control Failed")
+
     # Need a way to remember errors to prevent email spamming
     """
     if avg_temp > config_dict["too_hot"]:
