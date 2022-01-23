@@ -14,8 +14,8 @@ import json
 def handle_temp():
     config_dict = GHF.open_config_dict("Config.json")
     logger = GHF.create_logger()
-    #GPIO.setup(27, GPIO.OUT)
-    #GPIO.output(27, GPIO.HIGH)
+    GPIO.setup(27, GPIO.OUT)
+    GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
     multi_ports = [1, 2]
