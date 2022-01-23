@@ -1,5 +1,7 @@
 import os
 import datetime
+import time
+import SendData
 
 
 def take_picture():
@@ -7,6 +9,8 @@ def take_picture():
     target_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Images", current_time + ".png")
     command = "ffmpeg -f v4l2 -video_size 1280x720 -i /dev/video0 -frames 1 " + target_path
     os.system(command)
+    time.sleep(10)
+    SendData.send_image_data(open(target_path, "rb"))
 
 
 if __name__ == '__main__':
