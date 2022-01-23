@@ -17,3 +17,4 @@ requests==2.27.0
 twilio==7.4.0
 urllib3==1.26.7
 hcsr04sensor==1.6.2
+adafruit-circuitpython-mcp3xxx==1.4.6
