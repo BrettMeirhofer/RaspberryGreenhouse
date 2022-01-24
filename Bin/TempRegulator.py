@@ -21,23 +21,31 @@ def handle_temp():
     multi_ports = [1, 2]
 
     temps = []
-    web_json = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M"), "readings": []}
+    current_date = datetime.datetime.now().strftime("%Y%m%d%H%M")
+    temp_json = {"date": current_date, "readings": []}
 
     for index, port in enumerate(multi_ports):
         sensor = adafruit_ahtx0.AHTx0(tca[port])
         sensor_temp = round(sensor.temperature, 1)
         sensor_humd = round(sensor.relative_humidity, 1)
-        web_json["readings"].extend([sensor_temp, sensor_humd])
+        temp_json["readings"].extend([sensor_temp, sensor_humd])
         temps.append(sensor_temp)
 
     enable_heater = temps[0] < config_dict["heater_temp"]
-    web_json["heater"] = int(enable_heater)
     GPIO.cleanup()
 
+    if datetime.datetime.now().minute == 30:
+        try:
+            send_sensor_data(temp_json, "/admin/Temp/")
+        except requests.exceptions.RequestException:
+            logger.error("TempRegulator Data Upload Failed")
+
+    heater_json = {"device": 1, "status": int(enable_heater), "date": current_date}
+
     try:
-        send_sensor_data(web_json, "/admin/Temp/")
+        send_sensor_data(heater_json, "/admin/Device/")
     except requests.exceptions.RequestException:
-        logger.error("TempRegulator Data Upload Failed")
+        logger.error("Heater Status Upload Failed")
 
     try:
         GHF.toggle_relay(1, enable_heater)

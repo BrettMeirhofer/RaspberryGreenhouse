@@ -24,7 +24,6 @@ def check_soil():
         sensor = AnalogIn(mcp, channel)
         web_json["readings"].append(sensor.value)
 
-
     try:
         send_sensor_data(web_json, "/admin/Soil/")
     except requests.exceptions.RequestException:
