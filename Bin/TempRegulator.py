@@ -13,7 +13,7 @@ import json
 # Sends heater status and sensor data to a remote web server for ingesting into a database
 def handle_temp():
     config_dict = GHF.open_config_dict("Config.json")
-    logger = GHF.create_logger()
+    logger = GHF.create_logger("TempRegulator")
     GPIO.setup(27, GPIO.OUT)
     GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA

@@ -7,6 +7,7 @@ import GreenhouseFuncs as GHF
 
 # Records water level and sends it to a remote web server
 def record_water():
+    logger = GHF.create_logger("CheckWater")
     config_dict = GHF.open_config_dict("Config.json")
     trig = 4
     echo = 17

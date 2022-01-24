@@ -49,14 +49,14 @@ def get_data_file(file_name):
     return data_file, writer
 
 
-def create_logger():
+def create_logger(name):
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
     # set up the logfile handler
     log_path = path.join(path.dirname(__file__), "../Logs")
-    log_filename = path.join(log_path, "TempRegulatorErrors.log")
+    log_filename = path.join(log_path, name + ".log")
     fh = logging.FileHandler(log_filename)
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)

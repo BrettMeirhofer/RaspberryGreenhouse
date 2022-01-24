@@ -2,9 +2,11 @@ import os
 import datetime
 import time
 import SendData
+import GreenhouseFuncs as GHF
 
 
 def take_picture():
+    logger = GHF.create_logger("TakePicture")
     current_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
     target_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Images", current_time + ".png")
     command = "ffmpeg -f v4l2 -video_size 1280x720 -i /dev/video0 -frames 1 " + target_path
