@@ -19,8 +19,11 @@ def check_soil():
     spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
     cs = digitalio.DigitalInOut(board.D7)
     mcp = MCP.MCP3008(spi, cs)
-    soil1 = AnalogIn(mcp, MCP.P0)
-    web_json["readings"].append(soil1)
+    soil_channels = [MCP.P0, MCP.P0, MCP.P0]
+    for channel in soil_channels:
+        sensor = AnalogIn(mcp, channel)
+        web_json["readings"].append(sensor.value)
+
 
     try:
         send_sensor_data(web_json, "/admin/Soil/")
