@@ -6,17 +6,15 @@ A series of python scripts that can be scheduled using crontab on a raspberry pi
 - Automatic watering
 - Automatic heating
 - Remote reporting for heater/pump status
-- Remote reporting for temperature/humidity/water level
+- Remote reporting for temperature/humidity/water level/soil moisture
+- Individual Error logs for each utility
+- Daily image capture/upload
 
 # To do
 - Light detection
-- Soil Moisture detection
 - Error emails for too hot/too cold/low water level/malfunctioning equipment/low soil moisture
-- Daily log for errors and exceptions
 - Automatic lighting control
 - Automatic circulation/venting control
-- Daily image capture/upload
 - Testing
 - Github Actions automatic testing
-- Sprouting detection
-- Trimming detection/Email
+
