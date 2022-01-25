@@ -34,7 +34,7 @@ def handle_temp():
     enable_heater = temps[0] < config_dict["heater_temp"]
     GPIO.cleanup()
 
-    if datetime.datetime.now().minute == 30:
+    if datetime.datetime.now().minute % 30 == 0:
         try:
             send_sensor_data(temp_json, "/admin/Temp/")
         except requests.exceptions.RequestException:
