@@ -3,6 +3,7 @@ from hcsr04sensor import sensor
 import datetime
 from SendData import send_sensor_data
 import GreenhouseFuncs as GHF
+import pytz
 
 
 # Records water level and sends it to a remote web server
@@ -19,7 +20,7 @@ def record_water():
     distance_warm = measure_object.raw_distance()
     water_percent = round(1 - ((distance_warm - sensor_height) / reservoir_height), 4)
     GPIO.cleanup((trig, echo))
-    json_data = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M"), "water_level": water_percent}
+    json_data = {"date": datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M"), "water_level": water_percent}
     send_sensor_data(json_data, "/admin/Water/")
 
 

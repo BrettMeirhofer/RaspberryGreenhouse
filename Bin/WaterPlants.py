@@ -9,6 +9,7 @@ def enable_pump():
     GHF.toggle_relay(2, 1)
     time.sleep(config_dict["watering_duration"])
     GHF.toggle_relay(2, 0)
+    logger.info("Successfully watered plants")
 
 
 if __name__ == '__main__':

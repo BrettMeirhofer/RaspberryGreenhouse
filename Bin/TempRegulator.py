@@ -7,6 +7,7 @@ from SendData import send_sensor_data
 import RPi.GPIO as GPIO
 import requests
 import json
+import pytz
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -21,7 +22,7 @@ def handle_temp():
     multi_ports = [1, 2]
 
     temps = []
-    current_date = datetime.datetime.now().strftime("%Y%m%d%H%M")
+    current_date = datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M")
     temp_json = {"date": current_date, "readings": []}
 
     for index, port in enumerate(multi_ports):

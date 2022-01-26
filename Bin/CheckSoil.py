@@ -9,13 +9,14 @@ import GreenhouseFuncs as GHF
 from SendData import send_sensor_data
 import datetime
 import requests
+import pytz
 
 
 def check_soil():
     #GPIO.setup(27, GPIO.OUT)
     #GPIO.output(27, GPIO.HIGH)
     logger = GHF.create_logger("CheckSoil")
-    web_json = {"date": datetime.datetime.now().strftime("%Y%m%d%H%M"), "readings": []}
+    web_json = {"date": datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M"), "readings": []}
     spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
     cs = digitalio.DigitalInOut(board.D7)
     mcp = MCP.MCP3008(spi, cs)
