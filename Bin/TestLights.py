@@ -56,10 +56,10 @@ def write_data(data, addr):
     try:
         gatt.expect("Connection successful", timeout=5)
     except pexpect.exceptions.TIMEOUT:
-        dev = addr_dev_dict[addr]
-        print(f"Failed to connect to {dev}")
+        print(f"Failed to connect")
         return
 
+    print("Connection success")
     gatt.sendline(f"char-write-cmd {handle_hex} {data}")
     gatt.expect(".*")
     gatt.sendline("disconnect")
@@ -102,10 +102,15 @@ captured_commands = ["aa060000000000000000000000000000000000ac",
                      "3301000000000000000000000000000000000032",
                      "3301010000000000000000000000000000000033",
                      ]
-
+"""
 toggle = ["3301000000000000000000000000000000000032",
           "3301010000000000000000000000000000000033"]
+"""
 
+toggle = ["3301200000000000000000000000000000000012",
+          "3301100000000000000000000000000000000022",
+          "3301220000000000000000000000000000000010",
+          "3301110000000000000000000000000000000023"]
 
 while True:
     for x in toggle:
