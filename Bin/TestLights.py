@@ -53,6 +53,7 @@ def get_brightness_hex(bright):
 
 def write_data(data, addr):
     gatt.sendline(f"connect {addr}")
+    print(data)
     try:
         gatt.expect("Connection successful", timeout=5)
     except pexpect.exceptions.TIMEOUT:
@@ -115,8 +116,7 @@ toggle = ["3301200000000000000000000000000000000012",
 while True:
     for x in toggle:
         write_data(x, "D4:AD:FC:31:F7:13")
-
-        time.sleep(5)
+        time.sleep(2)
 
 
 
