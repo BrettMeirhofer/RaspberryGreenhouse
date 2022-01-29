@@ -6,7 +6,7 @@ import signal
 import sys
 # format- "device-name": "device-address"
 devices = {
-    "Smart LED Bulb": "9C:04:A0:95:19:95"
+    "H6008_1996": "9C:04:A0:95:19:95"
 }
 
 device_names = list(devices.keys())
