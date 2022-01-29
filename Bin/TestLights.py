@@ -103,5 +103,6 @@ def gen_rand_color():
 
 
 while True:
-    change_color_all(gen_rand_color())
-    time.sleep(10)
+    for x in [BLUE, RED, GREEN]:
+        change_color_all(x)
+        time.sleep(10)
