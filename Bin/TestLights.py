@@ -104,4 +104,4 @@ def gen_rand_color():
 
 while True:
     change_color_all(gen_rand_color())
-    time.sleep(3)
+    time.sleep(10)
