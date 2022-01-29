@@ -114,10 +114,12 @@ toggle = ["3301200000000000000000000000000000000012",
 
 while True:
     for x in toggle:
-        write_data(x, "D4:AD:FC:38:02:D9")
-        time.sleep(2)
+        write_data(x, "D4:AD:FC:31:F7:13")
+
+        time.sleep(5)
 
 
 
 
 
+"D4:AD:FC:31:F7:13"
