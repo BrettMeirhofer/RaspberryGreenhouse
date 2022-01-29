@@ -6,7 +6,7 @@ import signal
 import sys
 # format- "device-name": "device-address"
 devices = {
-    "H6008_1996": "9C:04:A0:95:19:96"
+    "Test": "D4:AD:FC:38:02:D9"
 }
 
 device_names = list(devices.keys())
