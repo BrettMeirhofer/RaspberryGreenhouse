@@ -53,7 +53,6 @@ def get_brightness_hex(bright):
 
 def write_data(data, addr):
     gatt.sendline(f"connect {addr}")
-    print(data)
     try:
         gatt.expect("Connection successful", timeout=5)
     except pexpect.exceptions.TIMEOUT:
@@ -61,7 +60,9 @@ def write_data(data, addr):
         return
 
     print("Connection success")
-    gatt.sendline(f"char-write-cmd {handle_hex} {data}")
+    line = f"char-write-cmd {handle_hex} {data}"
+    print(line)
+    gatt.sendline(line)
     gatt.expect(".*")
     gatt.sendline("disconnect")
     gatt.expect(".*")
