@@ -38,7 +38,7 @@ def toggle_relay(relay_id, state):
 def toggle_relay(relay_id, state):
     gpio_dict = {1: 6, 2: 13, 3: 19, 4: 26}
     target_pin = gpio_dict[int(relay_id)]
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(target_pin, GPIO.OUT)
     if state:
         GPIO.output(target_pin, GPIO.LOW)
