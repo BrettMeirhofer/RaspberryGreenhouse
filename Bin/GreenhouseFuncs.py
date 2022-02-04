@@ -9,6 +9,7 @@ import sys
 import json
 import shutil
 from os.path import exists
+import RPi.GPIO as GPIO
 
 
 def send_email(message, sender, sender_pw, receivers):
@@ -23,12 +24,25 @@ def send_email(message, sender, sender_pw, receivers):
             server.sendmail(sender, receiver, message)
 
 
+"""
 # Used to control a tasmota relay on the local network
 def toggle_relay(relay_id, state):
     config_dict = open_config_dict("Config.json")
     ip_address = config_dict["relay_ip"]
     target_url = "http://{}/cm?cmnd=Power{}%20{}".format(ip_address, relay_id, state)
     requests.get(url=target_url)
+"""
+
+
+# Relay control for a relay directly connected via GPIO
+def toggle_relay(relay_id, state):
+    gpio_dict = {1: 6, 2: 13, 3: 19, 4: 26}
+    target_pin = gpio_dict[relay_id]
+    GPIO.setup(target_pin, GPIO.OUT)
+    if state:
+        target_pin.output(target_pin, GPIO.HIGH)
+    else:
+        target_pin.output(target_pin, GPIO.LOW)
 
 
 def get_data_file(file_name):
