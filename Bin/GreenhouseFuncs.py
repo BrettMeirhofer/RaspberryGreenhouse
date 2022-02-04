@@ -41,9 +41,9 @@ def toggle_relay(relay_id, state):
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(target_pin, GPIO.OUT)
     if state:
-        target_pin.output(target_pin, GPIO.HIGH)
-    else:
         target_pin.output(target_pin, GPIO.LOW)
+    else:
+        target_pin.output(target_pin, GPIO.HIGH)
 
 
 def get_data_file(file_name):
