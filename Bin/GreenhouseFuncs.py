@@ -37,7 +37,7 @@ def toggle_relay(relay_id, state):
 # Relay control for a relay directly connected via GPIO
 def toggle_relay(relay_id, state):
     gpio_dict = {1: 6, 2: 13, 3: 19, 4: 26}
-    target_pin = gpio_dict[relay_id]
+    target_pin = gpio_dict[int(relay_id)]
     GPIO.setmode(GPIO.BOARD)
     if state:
         GPIO.setup(target_pin, GPIO.OUT, pull_up_down=GPIO.PUD_DOWN)
