@@ -49,7 +49,7 @@ def handle_temp():
         logger.error("Heater Status Upload Failed")
 
     try:
-        GHF.toggle_relay(1, enable_heater)
+        GHF.toggle_relay(4, enable_heater)
     except requests.exceptions.RequestException:
         logger.error("Relay Control Failed")
 
