@@ -13,12 +13,14 @@ import pytz
 
 
 def check_soil():
-    #GPIO.setup(27, GPIO.OUT)
-    #GPIO.output(27, GPIO.HIGH)
     spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
     cs = digitalio.DigitalInOut(board.D7)
     mcp = MCP.MCP3008(spi, cs)
-    print(AnalogIn(mcp, MCP.P2).value)
+    readings = []
+    for x in range(9):
+        readings.append(AnalogIn(mcp, MCP.P2).value)
+        time.sleep(.5)
+    print(readings.sort())
 
 
 if __name__ == '__main__':
