@@ -27,10 +27,9 @@ def check_soil():
 
     try:
         send_sensor_data(web_json, "/admin/Soil/")
+        send_sensor_data()
     except requests.exceptions.RequestException:
         logger.error("Upload Failed")
-
-
 
 
 if __name__ == '__main__':
