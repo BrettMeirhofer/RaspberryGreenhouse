@@ -20,7 +20,8 @@ def check_soil():
     for x in range(9):
         readings.append(AnalogIn(mcp, MCP.P2).value)
         time.sleep(.5)
-    print(readings.sort())
+    readings.sort()
+    print(readings)
 
 
 if __name__ == '__main__':
