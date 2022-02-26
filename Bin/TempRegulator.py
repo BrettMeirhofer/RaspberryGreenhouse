@@ -19,7 +19,7 @@ def handle_temp():
     GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
-    multi_ports = [1, 2]
+    multi_ports = [1]
 
     temps = []
     current_date = datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M")
@@ -29,7 +29,8 @@ def handle_temp():
         sensor = adafruit_ahtx0.AHTx0(tca[port])
         sensor_temp = round(sensor.temperature, 1)
         sensor_humd = round(sensor.relative_humidity, 1)
-        temp_json["readings"].extend([sensor_temp, sensor_humd])
+        temp_json["readings"].append({"r": sensor_temp, "s": 8})
+        temp_json["readings"].append({"r": sensor_humd, "s": 9})
         temps.append(sensor_temp)
 
     enable_heater = temps[0] < config_dict["heater_temp"]
@@ -37,7 +38,7 @@ def handle_temp():
 
     if datetime.datetime.now().minute % 30 == 0:
         try:
-            send_sensor_data(temp_json, "/admin/Temp/")
+            send_sensor_data(temp_json, "/admin/upload_readings/")
         except requests.exceptions.RequestException:
             logger.error("TempRegulator Data Upload Failed")
 
