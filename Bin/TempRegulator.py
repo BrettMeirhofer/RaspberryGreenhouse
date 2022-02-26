@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 import requests
 import json
 import pytz
+import sys
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -36,7 +37,12 @@ def handle_temp():
     enable_heater = temps[0] < config_dict["heater_temp"]
     GPIO.cleanup()
 
-    if datetime.datetime.now().minute % 30 == 0:
+    try:
+        cmd_line = sys.argv[1] == "f"
+    except IndexError:
+        cmd_line = False
+
+    if datetime.datetime.now().minute % 30 == 0 or cmd_line:
         try:
             send_sensor_data(temp_json, "/admin/upload_readings/")
         except requests.exceptions.RequestException:
