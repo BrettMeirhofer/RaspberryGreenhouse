@@ -37,28 +37,11 @@ def handle_temp():
     enable_heater = temps[0] < config_dict["heater_temp"]
     GPIO.cleanup()
 
-    try:
-        cmd_line = sys.argv[1] == "f"
-    except IndexError:
-        cmd_line = False
-
-    if datetime.datetime.now().minute % 30 == 0 or cmd_line:
-        try:
-            send_sensor_data(temp_json, "/admin/upload_readings/")
-        except requests.exceptions.RequestException:
-            logger.error("TempRegulator Data Upload Failed")
-
+    send_temp_data(logger, temp_json)
     heater_json = {"device": 1, "status": int(enable_heater), "date": current_date}
+    send_heater_status(logger, heater_json)
+    toggle_heater(logger, config_dict, enable_heater)
 
-    try:
-        send_sensor_data(heater_json, "/admin/Device/")
-    except requests.exceptions.RequestException:
-        logger.error("Heater Status Upload Failed")
-
-    try:
-        GHF.toggle_relay(config_dict["heater_relay"], enable_heater)
-    except requests.exceptions.RequestException:
-        logger.error("Relay Control Failed")
 
     # Need a way to remember errors to prevent email spamming
     """
@@ -70,6 +53,37 @@ def handle_temp():
         logger.error("Greenhouse Too Cold")
         send_email("Greenhouse Too Cold")
     """
+
+
+# Informs remote if heater is on/off
+def send_heater_status(logger, heater_json):
+    try:
+        send_sensor_data(heater_json, "/admin/Device/")
+    except requests.exceptions.RequestException:
+        logger.error("Heater Status Upload Failed")
+
+
+# Physically controls the on/off state of heater
+def toggle_heater(logger, config_dict, enable_heater):
+    try:
+        GHF.toggle_relay(config_dict["heater_relay"], enable_heater)
+    except requests.exceptions.RequestException:
+        logger.error("Relay Control Failed")
+
+
+# Sends temp/humd to remote every 30 mins or if triggered by cmd
+def send_temp_data(logger, temp_json):
+    try:
+        cmd_line = sys.argv[1] == "f"
+    except IndexError:
+        cmd_line = False
+
+    if datetime.datetime.now().minute % 30 == 0 or cmd_line:
+        try:
+            send_sensor_data(temp_json, "/admin/upload_readings/")
+            send_sensor_data({}, "/admin/Temp/")
+        except requests.exceptions.RequestException:
+            logger.error("TempRegulator Data Upload Failed")
 
 
 if __name__ == '__main__':
