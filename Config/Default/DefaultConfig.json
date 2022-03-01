@@ -5,5 +5,6 @@
   "too_cold": 4.5,
   "reservoir_height": 30.48,
   "water_sensor_dist": 17.78,
-  "relay_ip": "192.168.1.179"
+  "relay_ip": "192.168.1.179",
+  "heater_relay": 3
 }
