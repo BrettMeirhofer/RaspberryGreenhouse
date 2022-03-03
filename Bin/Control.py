@@ -31,23 +31,34 @@ class BlueBulb:
         self.gatt.sendline("disconnect")
         self.gatt.expect(".*")
 
-    def toggle_multi(self):
+    def flicker(self):
         for x in range(5):
             self.write_data(self.on)
             time.sleep(3)
             self.write_data(self.off)
             time.sleep(3)
 
+    def set_power(self, power):
+        if power:
+            self.write_data(self.on)
+        else:
+            self.write_data(self.off)
+
 
 # Allows for manual deployment of relay commands without using the browser
 if __name__ == '__main__':
     logger = GHF.create_logger("Control")
     command = sys.argv[1]
-    if command == "Relay":
+    if command == "relay":
         GHF.toggle_relay(sys.argv[2], int(sys.argv[3]))
 
-    if command == "Light":
+    if command == "light":
+        command2 = sys.argv[2]
         bulb = BlueBulb()
-        bulb.toggle_multi()
+        if command2 == "p":
+            bulb.set_power(int(sys.argv[3]))
+
+        if command2 == "f":
+            bulb.flicker()
 
 
