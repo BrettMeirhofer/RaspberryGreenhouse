@@ -13,8 +13,6 @@ import pytz
 
 
 def check_soil():
-    #GPIO.setup(27, GPIO.OUT)
-    #GPIO.output(27, GPIO.HIGH)
     soil_ids = [5, 6, 7]
     logger = GHF.create_logger("CheckSoil")
     web_json = {"date": datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M"), "readings": []}

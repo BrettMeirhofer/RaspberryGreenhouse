@@ -12,7 +12,7 @@ import requests
 import pytz
 
 
-def check_soil():
+def check_light():
     spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
     cs = digitalio.DigitalInOut(board.D7)
     mcp = MCP.MCP3008(spi, cs)
@@ -25,4 +25,4 @@ def check_soil():
 
 
 if __name__ == '__main__':
-    check_soil()
+    check_light()
