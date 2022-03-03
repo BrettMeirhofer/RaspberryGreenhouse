@@ -5,7 +5,7 @@ import pexpect
 
 
 class BlueBulb:
-    mac = "9C:04:A0:95:19:95"
+    mac = "9C:04:A0:95:19:96"
     handle = 21
     handle_hex = "0x0011"
     on = "3301000000000000000000000000000000000032"
