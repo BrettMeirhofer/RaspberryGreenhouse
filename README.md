@@ -20,4 +20,4 @@ A series of python scripts that can be scheduled using crontab on a raspberry pi
 - Voice commands
 - Weekly email reports
 - Sharing greenhouse config details with remote
-
+- Local webserver with GUI for control
