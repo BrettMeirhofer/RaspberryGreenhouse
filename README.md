@@ -17,4 +17,7 @@ A series of python scripts that can be scheduled using crontab on a raspberry pi
 - Automatic circulation/venting control
 - Testing
 - Github Actions automatic testing
-
+- Voice commands
+- Weekly email reports
+- Sharing greenhouse config details with remote
+- Local webserver with GUI for control
