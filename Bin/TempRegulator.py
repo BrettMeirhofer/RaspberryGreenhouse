@@ -1,14 +1,20 @@
-import board
-import adafruit_ahtx0
-import adafruit_tca9548a
 import datetime
 import GreenhouseFuncs as GHF
 from SendData import send_sensor_data
-import RPi.GPIO as GPIO
 import requests
 import json
 import pytz
 import sys
+
+
+# Microcontroller exclusive libraries that break testing on pc
+try:
+    import RPi.GPIO as GPIO
+    import board
+    import adafruit_ahtx0
+    import adafruit_tca9548a
+except ImportError:
+    pass
 
 
 # Maintains greenhouse temperature by toggling a heater on a Tasmota relay based on temperature reported from sensors
@@ -35,6 +41,7 @@ def handle_temp():
         temps.append(sensor_temp)
 
     enable_heater = temps[0] < config_dict["heater_temp"]
+
     GPIO.cleanup()
 
     send_temp_data(logger, temp_json)
@@ -42,17 +49,7 @@ def handle_temp():
     send_heater_status(logger, heater_json)
     toggle_heater(logger, config_dict, enable_heater)
 
-
-    # Need a way to remember errors to prevent email spamming
-    """
-    if avg_temp > config_dict["too_hot"]:
-        logger.error("Greenhouse Overheating")
-        send_email("Greenhouse Overheating")
-
-    if avg_temp < config_dict["too_cold"]:
-        logger.error("Greenhouse Too Cold")
-        send_email("Greenhouse Too Cold")
-    """
+    temp_errors(temps[0], config_dict, temp_json)
 
 
 # Informs remote if heater is on/off
@@ -84,6 +81,27 @@ def send_temp_data(logger, temp_json):
             send_sensor_data({}, "/admin/Temp/")
         except requests.exceptions.RequestException:
             logger.error("TempRegulator Data Upload Failed")
+
+
+def temp_errors(temp, config_dict, logger):
+    errors = GHF.open_config_dict("Errors.json")
+    temp_f = GHF.c_to_f(temp)
+
+    if temp > config_dict["too_hot"] and ("too_hot" not in errors["flags"]):
+        if logger is not None:
+            logger.error("Greenhouse Overheating")
+        GHF.send_email("Greenhouse Too Hot", "You are being notified because the greenhouse "
+                                             "temperature {}F is higher than the maximum temp {}F."
+                       .format(temp_f, GHF.c_to_f(config_dict["too_hot"])))
+        GHF.add_error_flag("too_hot")
+
+    if temp < config_dict["too_cold"] and ("too_cold" not in errors["flags"]):
+        if logger is not None:
+            logger.error("Greenhouse Too Cold")
+        GHF.send_email("Greenhouse Too Cold", "You are being notified because the greenhouse "
+                                              "temperature {}F is lower than the minimum temp {}F."
+                       .format(temp_f, GHF.c_to_f(config_dict["too_cold"])))
+        GHF.add_error_flag("too_cold")
 
 
 if __name__ == '__main__':

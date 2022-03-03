@@ -116,4 +116,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-Bin/test.py
+
+Bin/tests/test.py
+Config/Config.json
+Config/EmailConfig.json
+Config/WebConfig.json
+Config/Errors.json

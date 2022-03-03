@@ -1,7 +1,6 @@
 from os import path
 import smtplib
 import ssl
-import requests
 import csv
 import logging
 import datetime
@@ -9,20 +8,32 @@ import sys
 import json
 import shutil
 from os.path import exists
-import RPi.GPIO as GPIO
+from email.message import EmailMessage
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
 
 
-def send_email(message, sender, sender_pw, receivers):
+def c_to_f(temp):
+    return (temp * 9/5) + 32
+
+
+def send_email(subject, message):
     port = 465  # For SSL
-
-    # Create a secure SSL context
+    email_config = open_config_dict("EmailConfig.json")
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login(sender, sender_pw)
-        for receiver in receivers:
-            server.sendmail(sender, receiver, message)
+    msg = EmailMessage()
+    msg.set_content(message)
+    msg['Subject'] = subject
+    msg['From'] = email_config["sender"]
+    msg['To'] = email_config["receivers"]
 
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(email_config["sender"], email_config["sender-pw"])
+        server.send_message(msg)
 
 """
 # Used to control a tasmota relay on the local network
@@ -97,3 +108,19 @@ def open_config_dict(file_name):
         config_dict = json.loads(config_file.read())
 
     return config_dict
+
+
+def update_config_dict(file_name, data):
+    base_path = path.join(path.dirname(path.dirname(__file__)), "Config")
+    config_path = path.join(base_path, file_name)
+
+    with open(config_path, "w") as config_file:
+        config_file.write(json.dumps(data))
+
+
+def add_error_flag(flag):
+    errors = open_config_dict("Errors.json")
+
+    if flag not in errors["flags"]:
+        errors["flags"].append(flag)
+        update_config_dict("Errors.json", errors)
