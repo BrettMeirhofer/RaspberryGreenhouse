@@ -23,7 +23,7 @@ $(document).ready(function () {
 function create_form (text, mode, item){
     my_form=document.createElement('FORM');
     my_form.method ='POST'
-    my_form.action = '/control?device=' + String(item) + '&toggle=' + mode
+    my_form.action = '/control?device=' + String(item) + '&power=' + mode
     my_tb=document.createElement('BUTTON')
     my_tb.classList.add('button')
     my_tb.class = "button"
