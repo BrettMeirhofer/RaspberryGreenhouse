@@ -41,3 +41,7 @@ h2 {
     text-align:center;
     background-color: gray;
 }
+
+form {
+    display: inline-block;
+}
