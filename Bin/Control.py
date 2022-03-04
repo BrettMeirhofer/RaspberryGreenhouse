@@ -4,6 +4,20 @@ import sys
 import pexpect
 
 
+def int_to_hex(intv):
+    h = hex(intv).replace("0x", "")
+    while len(h) < 2:
+        h = "0" + h
+    return h
+
+
+def get_rgb_hex(r, g, b):
+    sig = (3 * 16 + 1) ^ r ^ g ^ b
+    bins = [51, 5, 2, r, g, b, 0, 255, 174, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, sig]
+    bins_str = map(int_to_hex, bins)
+    return "".join(bins_str)
+
+
 class BlueBulb:
     mac = "9C:04:A0:95:19:96"
     handle = 21
@@ -44,6 +58,12 @@ class BlueBulb:
         else:
             self.write_data(self.off)
 
+    def change_color(self, rgbt):
+        r, g, b = rgbt
+        hex_str = get_rgb_hex(r, g, b)
+        self.write_data(hex_str)
+        print(f"Changed {self.mac} color to {rgbt}")
+
 
 # Allows for manual deployment of relay commands without using the browser
 if __name__ == '__main__':
@@ -60,5 +80,11 @@ if __name__ == '__main__':
 
         if command2 == "f":
             bulb.flicker()
+
+        if command2 == "c":
+            command3 = sys.argv[3]
+            if command3 == "b":
+                bulb.change_color((255, 0, 0))
+
 
 
