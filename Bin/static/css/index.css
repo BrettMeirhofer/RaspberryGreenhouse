@@ -6,19 +6,38 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 8px 8px;
   transition-duration: 0.4s;
   cursor: pointer;
-}
-
-.button {
-  background-color: white;
-  color: black;
-  border: 2px solid #4CAF50;
-}
-
-.button:hover {
+  width: 200px;
   background-color: #4CAF50;
   color: white;
 }
 
+
+.button:hover {
+  background-color: #317534;
+  color: white;
+}
+
+.title {
+    text-align: center;
+
+}
+
+
+h2 {
+    text-align: center;
+    color: white;
+}
+
+
+.toggle {
+    width: max-content;
+    margin: auto;
+    margin-top:25px;
+    margin-bottom:25px;
+    padding: 10px;
+    text-align:center;
+    background-color: gray;
+}

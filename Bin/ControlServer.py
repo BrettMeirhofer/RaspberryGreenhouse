@@ -1,7 +1,7 @@
 import flask
 from flask import request
 from flask import render_template
-import Control
+import json
 import GreenhouseFuncs as GHF
 
 app = flask.Flask(__name__)  # sets up the application
@@ -24,6 +24,14 @@ def lights_on():
     GHF.toggle_device(device, power)
     return '', 204
 
+
+@app.route('/toggles', methods=['GET'])
+def get_toggles():
+    config_dict = GHF.open_config_dict("Config.json")
+    output_dict = {"devices": []}
+    for x in config_dict["devices"]:
+        output_dict["devices"].append(x["name"])
+    return json.dumps(output_dict)
 
 GHF.create_logger("ControlServer")
 app.run(host="0.0.0.0")

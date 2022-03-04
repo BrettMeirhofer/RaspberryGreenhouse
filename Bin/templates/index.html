@@ -5,19 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/devices.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
   <title>Index</title>
 </head>
 
 <body>
-  <h1 style="color: blue">Index</h1>
-  <p>This is an HTML file served up by Flask</p>
-  <form action="/control?device=light1&power=1" method="POST">
-    <button class="button">Lights On</button>
-  </form>
-  <form action="/control?device=light1&power=0" method="POST">
-    <button class="button">Lights Off</button>
-  </form>
+  <h1 class="title">Greenhouse Control</h1>
+  <div id="toggles">
+  </div>
 
 </body>
 
