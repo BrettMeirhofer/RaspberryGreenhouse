@@ -15,10 +15,12 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/control', methods=['GET'])
+@app.route('/control', methods=['POST'])
 def lights_on():
-    device = request.args.get('page', default=1, type=str)
+    logger = GHF.create_logger("ControlServer")
+    device = request.args.get('device', type=str)
     power = request.args.get('power', default=1, type=int)
+    logger.error(device)
     GHF.toggle_device(device, power)
     return '', 204
 
