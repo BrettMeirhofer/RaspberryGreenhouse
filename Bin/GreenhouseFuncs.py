@@ -9,6 +9,7 @@ import json
 import shutil
 from os.path import exists
 from email.message import EmailMessage
+from bluetooth import Bulb
 
 try:
     import RPi.GPIO as GPIO
@@ -45,7 +46,7 @@ def toggle_relay(relay_id, state):
 """
 
 
-# Relay control for a relay directly connected via GPIO
+# Toggles a gpio based on the relay id
 def toggle_relay(relay_id, state):
     gpio_dict = {1: 6, 2: 13, 3: 19, 4: 26}
     target_pin = gpio_dict[int(relay_id)]
@@ -56,6 +57,18 @@ def toggle_relay(relay_id, state):
         GPIO.output(target_pin, GPIO.LOW)
     else:
         GPIO.output(target_pin, GPIO.HIGH)
+
+
+# Toggles a gpio pin directly
+def toggle_gpio(target_pin, state):
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(target_pin, GPIO.OUT)
+    if state:
+        GPIO.output(target_pin, GPIO.LOW)
+    else:
+        GPIO.output(target_pin, GPIO.HIGH)
+
 
 
 def get_data_file(file_name):
@@ -124,3 +137,14 @@ def add_error_flag(flag):
     if flag not in errors["flags"]:
         errors["flags"].append(flag)
         update_config_dict("Errors.json", errors)
+
+
+def toggle_device(device, toggle):
+    config_dict = open_config_dict("Config.json")
+    for device_config in config_dict["devices"]:
+        if device_config["name"] == device:
+            if "gpio" in device_config:
+                toggle_gpio(device_config["gpio"], toggle)
+            if "mac" in device_config:
+                bulb = Bulb(device_config["mac"])
+                bulb.set_power(toggle)

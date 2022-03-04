@@ -7,5 +7,28 @@
   "water_sensor_dist": 17.78,
   "relay_ip": "192.168.1.179",
   "heater_relay": 3,
-  "pump_relay": 2
+  "pump_relay": 2,
+  "devices": [
+    {
+      "name": "heater1",
+      "gpio": 19,
+      "web_id": 1
+    },
+    {
+      "name": "pump1",
+      "gpio": 13
+    },
+    {
+      "name": "light1",
+      "mac": "9C:04:A0:95:19:96"
+    },
+    {
+      "name": "outlet1",
+      "gpio": 6
+    },
+    {
+      "name": "outlet4",
+      "gpio": 26
+    }
+  ]
 }
