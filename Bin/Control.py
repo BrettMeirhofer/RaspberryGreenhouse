@@ -24,6 +24,8 @@ class BlueBulb:
     handle_hex = "0x0011"
     off = "3301000000000000000000000000000000000032"
     on = "3301010000000000000000000000000000000033"
+
+
     gatt = None
 
     def __init__(self):
@@ -59,10 +61,11 @@ class BlueBulb:
             self.write_data(self.off)
 
     def change_color(self, rgbt):
-        r, g, b = rgbt
-        hex_str = get_rgb_hex(r, g, b)
-        self.write_data(hex_str)
-        print(f"Changed {self.mac} color to {rgbt}")
+        #r, g, b = rgbt
+        #hex_str = get_rgb_hex(r, g, b)
+        #self.write_data(hex_str)
+        self.write_data("330502ffffff00000000000000000000000000CB")
+        #print(f"Changed {self.mac} color to {rgbt}")
 
 
 # Allows for manual deployment of relay commands without using the browser
