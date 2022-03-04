@@ -1,7 +1,11 @@
 import time
 import GreenhouseFuncs as GHF
 import sys
-import pexpect
+
+try:
+    import pexpect
+except ImportError:
+    pass
 
 
 def int_to_hex(intv):
