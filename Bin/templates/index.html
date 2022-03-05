@@ -13,6 +13,15 @@
 
 <body>
   <h1 class="title">Greenhouse Control</h1>
+  <form method="POST" action="/control?device=light1&color=ff00000">
+    <button class="button" style="background-color:red;">Red</button>
+  </form>
+  <form method="POST" action="/control?device=light1&color=00ff00">
+    <button class="button" style="background-color:green;">Green</button>
+  </form>
+  <form method="POST" action="/control?device=light1&color=0000ff">
+    <button class="button" style="background-color:blue;">Blue</button>
+  </form>
   <div id="toggles">
   </div>
 
