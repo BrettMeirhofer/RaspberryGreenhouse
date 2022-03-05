@@ -14,8 +14,11 @@ def int_to_hex(intv):
 
 
 def get_rgb_hex(r, g, b):
-    sig = (3 * 16 + 1) ^ r ^ g ^ b
-    bins = [51, 5, 13, r, g, b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, sig]
+    bins = [51, 5, 13, r, g, b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    sig = 0
+    for item in bins:
+        sig = sig ^ item
+    bins.append(sig)
     bins_str = map(int_to_hex, bins)
     return "".join(bins_str)
 
@@ -32,7 +35,6 @@ class Bulb:
     def __init__(self, mac):
         self.gatt = pexpect.spawn('gatttool -I')
         self.mac = mac
-
 
     def write_data(self, data):
         self.gatt.sendline(f"connect {self.mac}")
@@ -71,3 +73,5 @@ class Bulb:
 
     def change_color_hex(self, hex_color):
         self.change_color(tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4)))
+
+
