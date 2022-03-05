@@ -26,14 +26,7 @@ def lights_on():
         GHF.toggle_device(device, power)
     else:
         bulb = Bulb("9C:04:A0:95:19:96")
-        if color == "ff0000":
-            bulb.write_data("33050dff000000000000000000000000000000c4")
-
-        if color == "0000ff":
-            bulb.write_data("33050d0000ff00000000000000000000000000c4")
-
-        if color == "00ff00":
-            bulb.write_data("33050d00ff0000000000000000000000000000c4")
+        bulb.change_color_hex(color)
     return '', 204
 
 

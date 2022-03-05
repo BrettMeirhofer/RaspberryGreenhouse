@@ -15,7 +15,7 @@ def int_to_hex(intv):
 
 def get_rgb_hex(r, g, b):
     sig = (3 * 16 + 1) ^ r ^ g ^ b
-    bins = [51, 5, 2, r, g, b, 0, 255, 174, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, sig]
+    bins = [51, 5, 13, r, g, b, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, sig]
     bins_str = map(int_to_hex, bins)
     return "".join(bins_str)
 
@@ -64,8 +64,10 @@ class Bulb:
             self.write_data(self.off)
 
     def change_color(self, rgbt):
-        #r, g, b = rgbt
-        #hex_str = get_rgb_hex(r, g, b)
-        #self.write_data(hex_str)
-        self.write_data("33050dff000000000000000000000000000000c4")
-        #print(f"Changed {self.mac} color to {rgbt}")
+        r, g, b = rgbt
+        hex_str = get_rgb_hex(r, g, b)
+        self.write_data(hex_str)
+        print(f"Changed {self.mac} color to {rgbt}")
+
+    def change_color_hex(self, hex_color):
+        self.change_color(tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4)))

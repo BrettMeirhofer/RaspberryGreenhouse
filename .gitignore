@@ -122,3 +122,6 @@ Config/Config.json
 Config/EmailConfig.json
 Config/WebConfig.json
 Config/Errors.json
+Bin/tests/test.py
+Bin/bt/Output.txt
+Bin/tests/test.py
