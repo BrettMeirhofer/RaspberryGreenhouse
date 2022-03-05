@@ -22,8 +22,14 @@ if __name__ == '__main__':
 
         if command2 == "c":
             command3 = sys.argv[3]
+            if command3 == "r":
+                bulb.write_data("33050dff000000000000000000000000000000c4")
+
             if command3 == "b":
-                bulb.change_color((255, 0, 0))
+                bulb.write_data("33050d0000ff00000000000000000000000000c4")
+
+            if command3 == "g":
+                bulb.write_data("33050d00ff0000000000000000000000000000c4")
 
 
 

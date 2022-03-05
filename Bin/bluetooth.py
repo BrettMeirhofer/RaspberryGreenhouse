@@ -67,5 +67,5 @@ class Bulb:
         #r, g, b = rgbt
         #hex_str = get_rgb_hex(r, g, b)
         #self.write_data(hex_str)
-        self.write_data("330502ffffff00000000000000000000000000CB")
+        self.write_data("33050dff000000000000000000000000000000c4")
         #print(f"Changed {self.mac} color to {rgbt}")
