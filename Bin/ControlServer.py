@@ -38,5 +38,12 @@ def get_toggles():
         output_dict["devices"].append(x["name"])
     return json.dumps(output_dict)
 
+
+@app.route('/colors', methods=['GET'])
+def get_colors():
+    config_dict = GHF.open_config_dict("Config.json")
+    return json.dumps({"colors": config_dict["colors"]})
+
+
 GHF.create_logger("ControlServer")
 app.run(host="0.0.0.0")
