@@ -14,7 +14,7 @@ if __name__ == '__main__':
         GHF.toggle_relay(sys.argv[2], int(sys.argv[3]))
 
     if command == "state":
-        print(GHF.get_gpio_state(sys.argv[2]))
+        print(GHF.get_gpio_state(int(sys.argv[2])))
 
     if command == "light":
         command2 = sys.argv[2]
