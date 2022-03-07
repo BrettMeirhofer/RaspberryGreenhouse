@@ -154,3 +154,9 @@ def get_gpio_state(pin):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin, GPIO.OUT)
     return GPIO.input(pin)
+
+
+def list_gpio_state():
+    gpio_dict = [6,13,19,26]
+    for gpio in gpio_dict:
+        print("gpio {}: state {}".format(gpio, get_gpio_state(gpio)))
