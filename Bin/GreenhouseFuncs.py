@@ -70,7 +70,6 @@ def toggle_gpio(target_pin, state):
         GPIO.output(target_pin, GPIO.HIGH)
 
 
-
 def get_data_file(file_name):
     data_file_path = file_name + datetime.datetime.now().strftime("%Y%m%d") + ".csv"
     data_file_path = path.join(path.dirname(__file__), "../Data", data_file_path)
@@ -148,3 +147,10 @@ def toggle_device(device, toggle):
             if "mac" in device_config:
                 bulb = Bulb(device_config["mac"])
                 bulb.set_power(toggle)
+
+
+def get_gpio_state(pin):
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(pin, GPIO.OUT)
+    return GPIO.input(pin)

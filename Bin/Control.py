@@ -13,6 +13,9 @@ if __name__ == '__main__':
     if command == "relay":
         GHF.toggle_relay(sys.argv[2], int(sys.argv[3]))
 
+    if command == "state":
+        print(GHF.get_gpio_state(sys.argv[2]))
+
     if command == "light":
         command2 = sys.argv[2]
         bulb = Bulb("9C:04:A0:95:19:96")
