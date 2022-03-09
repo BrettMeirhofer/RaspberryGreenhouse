@@ -39,7 +39,7 @@ class Bulb:
     def write_data(self, data):
         self.gatt.sendline(f"connect {self.mac}")
         try:
-            self.gatt.expect("Connection successful", timeout=5)
+                self.gatt.expect("Connection successful", timeout=5)
         except pexpect.exceptions.TIMEOUT:
             print(f"Failed to connect")
             return

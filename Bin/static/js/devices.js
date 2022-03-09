@@ -24,37 +24,56 @@ $(document).ready(function () {
             data = JSON.parse(data)
             data.devices.forEach(function (item, index) {
                 div=document.createElement('div');
-                div.id = item
+                div.id = item.name
                 div.classList.add('toggle')
                 title = document.createElement('h2')
                 title.classList.add('title')
-                title.textContent = item
+                title.textContent = item.name
                 div.appendChild(title);
-                div.appendChild(create_form("ON", 1, item))
-                div.appendChild(create_form("OFF", 0, item))
+                if (item.type == "direct"){
+                    status = ""
+                    if (item.state == 0){
+                        status = "OFF"
+                    }
+                    else {
+                        status = "ON"
+                    }
+                    div.appendChild(create_form(status, 1 - item.state, item.name))
+                }
+                else{
+                    div.appendChild(create_form("ON", 1, item.name))
+                    div.appendChild(create_form("OFF", 0, item.name))
+                }
+                
                 div.appendChild(my_form)
                 $("#toggles").append(div)
-                if (item.includes("light")){
-                    var div1=document.createElement('div');
-                    div.append(div1)
-                    colors.forEach(function (item, index) {
-                        my_form=document.createElement('FORM');
-                        my_form.method ='POST'
-                        my_form.action = '/control?device=light1' + '&color=' + item
-                        my_tb=document.createElement('BUTTON')
-                        my_tb.classList.add('button')
-                         my_tb.classList.add('button2')
-                         console.log("#" + item)
-                         my_tb.style.backgroundColor = "#" + item
-                         my_form.appendChild(my_tb);
-                         div1.appendChild(my_form)
-                         console.log(div1)
-                    })
+                if (item.name.includes("light")){
+                    div.append(create_colors(colors))
                 }
             })
         }
     })
 })
+
+
+
+//Creates a div and adds buttons for controlling colors to it
+function create_colors(colors){
+    var div1=document.createElement('div');
+    colors.forEach(function (color, index) {
+        my_form=document.createElement('FORM');
+        my_form.method ='POST'
+        my_form.action = '/control?device=light1' + '&color=' + color
+        my_tb=document.createElement('BUTTON')
+        my_tb.classList.add('button')
+        my_tb.classList.add('button2')
+        my_tb.style.backgroundColor = "#" + color
+        my_form.appendChild(my_tb);
+        div1.appendChild(my_form)
+    })
+    return div1
+}
+
 
 
 function create_form (text, mode, item){

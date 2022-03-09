@@ -142,18 +142,21 @@ def toggle_device(device, toggle):
     config_dict = open_config_dict("Config.json")
     for device_config in config_dict["devices"]:
         if device_config["name"] == device:
-            if "gpio" in device_config:
+            if "direct" == device_config["type"]:
                 toggle_gpio(device_config["gpio"], toggle)
-            if "mac" in device_config:
+            if "bt" in device_config["type"]:
                 bulb = Bulb(device_config["mac"])
                 bulb.set_power(toggle)
 
 
 def get_gpio_state(pin):
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pin, GPIO.OUT)
-    return GPIO.input(pin)
+    try:
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(pin, GPIO.OUT)
+        return GPIO.input(pin)
+    except NameError:
+        return 0
 
 
 def list_gpio_state():

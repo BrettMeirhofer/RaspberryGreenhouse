@@ -28,6 +28,7 @@ def lights_on():
     else:
         bulb = Bulb("9C:04:A0:95:19:96")
         bulb.change_color_hex(color)
+
     return '', 204
 
 
@@ -36,7 +37,11 @@ def get_toggles():
     config_dict = GHF.open_config_dict("Config.json")
     output_dict = {"devices": []}
     for x in config_dict["devices"]:
-        output_dict["devices"].append(x["name"])
+        if x["type"] == "direct":
+            state = not GHF.get_gpio_state(x["gpio"])
+        else:
+            state = "NA"
+        output_dict["devices"].append({"name": x["name"], "type": x["type"], "state": state})
     return json.dumps(output_dict)
 
 
