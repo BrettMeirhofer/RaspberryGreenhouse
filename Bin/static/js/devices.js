@@ -18,7 +18,7 @@ $(document).ready(function () {
     async: true
     });
 
-    create_toggles()
+    create_toggles(colors)
 })
 
 
@@ -93,7 +93,7 @@ function create_toggles(colors){
                     div.append(create_colors(colors))
                 }
                 $(".button1").click(function(){
-                    create_toggles()
+                    create_toggles(colors)
                 })
             })
         }
