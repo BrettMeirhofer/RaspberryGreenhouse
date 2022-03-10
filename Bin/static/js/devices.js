@@ -93,7 +93,9 @@ function create_toggles(colors){
                     div.append(create_colors(colors))
                 }
                 $(".button1").click(function(){
-                    create_toggles(colors)
+                    setTimeout(function() {
+                        create_toggles(colors)
+                      }, 300);
                 })
             })
         }
