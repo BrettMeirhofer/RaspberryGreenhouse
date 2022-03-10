@@ -38,7 +38,7 @@ $(document).ready(function () {
                     else {
                         status = "ON"
                     }
-                    div.appendChild(create_form(status, !item.state, item.name))
+                    div.appendChild(create_form(status, Number(1 - item.state), item.name))
                 }
                 else{
                     div.appendChild(create_form("ON", 1, item.name))
