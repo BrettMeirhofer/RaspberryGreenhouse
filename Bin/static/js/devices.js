@@ -18,41 +18,7 @@ $(document).ready(function () {
     async: true
     });
 
-    $.ajax({
-        url: "/toggles",
-        success: function (data) {
-            data = JSON.parse(data)
-            data.devices.forEach(function (item, index) {
-                div=document.createElement('div');
-                div.id = item.name
-                div.classList.add('toggle')
-                title = document.createElement('h2')
-                title.classList.add('title')
-                title.textContent = item.name
-                div.appendChild(title);
-                if (item.type == "direct"){
-                    status = ""
-                    if (item.state == 0){
-                        status = "OFF"
-                    }
-                    else {
-                        status = "ON"
-                    }
-                    div.appendChild(create_form(status, Number(1 - item.state), item.name))
-                }
-                else{
-                    div.appendChild(create_form("ON", 1, item.name))
-                    div.appendChild(create_form("OFF", 0, item.name))
-                }
-                
-                div.appendChild(my_form)
-                $("#toggles").append(div)
-                if (item.name.includes("light")){
-                    div.append(create_colors(colors))
-                }
-            })
-        }
-    })
+    create_toggles()
 })
 
 
@@ -86,5 +52,50 @@ function create_form (text, mode, item){
     my_tb.class = "button"
     my_tb.textContent = text
     my_form.appendChild(my_tb);
+    my_tb.click
     return my_form
+}
+
+
+
+function create_toggles(colors){
+    $.ajax({
+        url: "/toggles",
+        success: function (data) {
+            $("#toggles").empty()
+            data = JSON.parse(data)
+            data.devices.forEach(function (item, index) {
+                div=document.createElement('div');
+                div.id = item.name
+                div.classList.add('toggle')
+                title = document.createElement('h2')
+                title.classList.add('title')
+                title.textContent = item.name
+                div.appendChild(title);
+                if (item.type == "direct"){
+                    status = ""
+                    if (item.state == 0){
+                        status = "OFF"
+                    }
+                    else {
+                        status = "ON"
+                    }
+                    div.appendChild(create_form(status, Number(1 - item.state), item.name))
+                }
+                else{
+                    div.appendChild(create_form("ON", 1, item.name))
+                    div.appendChild(create_form("OFF", 0, item.name))
+                }
+                
+                div.appendChild(my_form)
+                $("#toggles").append(div)
+                if (item.name.includes("light")){
+                    div.append(create_colors(colors))
+                }
+                $(".button1").click(function(){
+                    create_toggles()
+                })
+            })
+        }
+    })
 }
