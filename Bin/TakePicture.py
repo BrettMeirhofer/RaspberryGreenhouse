@@ -21,7 +21,7 @@ def take_picture():
             os.system(command)
             time.sleep(1)
         time.sleep(1)
-        SendData.send_image_data(open(target_path, "rb"))
+        SendData.send_image_data(open(target_path, "rb"), params={"cam": camera["id"]})
 
 
 if __name__ == '__main__':
