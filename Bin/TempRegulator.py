@@ -45,9 +45,11 @@ def handle_temp():
     GPIO.cleanup()
 
     send_temp_data(logger, temp_json)
-    heater_json = {"device": 1, "status": int(enable_heater), "date": current_date}
-    send_heater_status(logger, heater_json)
-    toggle_heater(logger, config_dict, enable_heater)
+
+    if config_dict["heating"]:
+        heater_json = {"device": 1, "status": int(enable_heater), "date": current_date}
+        send_heater_status(logger, heater_json)
+        toggle_heater(logger, config_dict, enable_heater)
 
     temp_errors(temps[0], config_dict, temp_json)
 

@@ -8,6 +8,7 @@
   "relay_ip": "192.168.1.179",
   "heater_relay": 3,
   "pump_relay": 2,
+  "heating": 0,
   "colors": ["ffffff","ff0000", "00ff00", "0000ff", "ffff00", "00ffff", "ff00ff"],
   "devices": [
     {
