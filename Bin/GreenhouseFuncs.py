@@ -7,6 +7,7 @@ import datetime
 import sys
 import json
 import shutil
+import pytz
 from os.path import exists
 from email.message import EmailMessage
 from bluetooth import Bulb
@@ -163,3 +164,7 @@ def list_gpio_state():
     gpio_dict = [6,13,19,26]
     for gpio in gpio_dict:
         print("gpio {}: state {}".format(gpio, get_gpio_state(gpio)))
+
+
+def c_date():
+    return datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M")
