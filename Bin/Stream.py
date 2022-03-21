@@ -14,7 +14,7 @@ def take_picture():
     for camera in config_dict["cams"]:
         file_name = camera["name"] + ".png"
         target_path = os.path.join(os.path.dirname(__file__), "static", "img", file_name)
-        command = "ffmpeg -f v4l2 -video_size 1280x720 -i {} -frames 1 {}".format(camera["sys"], target_path)
+        command = "ffmpeg -y -f v4l2 -video_size 1280x720 -i {} -frames 1 {}".format(camera["sys"], target_path)
         os.system(command)
         time.sleep(.1)
 
