@@ -76,6 +76,9 @@ def send_temp_data(logger, temp_json):
     except IndexError:
         cmd_line = False
 
+    if cmd_line:
+        print("Running from command line")
+
     if datetime.datetime.now().minute % 30 == 0 or cmd_line:
         try:
             send_sensor_data(temp_json, "/admin/upload_readings/")
