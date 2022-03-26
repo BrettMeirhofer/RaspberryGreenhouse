@@ -13,7 +13,7 @@ import pytz
 
 
 # Reads and uploads values from analog sensors
-def check_soil():
+def check_adc():
     logger = GHF.create_logger("CheckADC")
     config_dict = GHF.open_config_dict("Config.json")
 
@@ -24,7 +24,7 @@ def check_soil():
 
     for sensor in config_dict["adc_sensors"]:
         sensor = AnalogIn(mcp, getattr(MCP, sensor["port"]))
-        web_json["readings"].append({"r": sensor.value, "s": sensor["ID"]})
+        web_json["readings"].append({"r": sensor.value, "s": sensor["id"]})
 
     try:
         send_sensor_data(web_json, "/admin/upload_readings/")
@@ -33,4 +33,4 @@ def check_soil():
 
 
 if __name__ == '__main__':
-    check_soil()
+    check_adc()
