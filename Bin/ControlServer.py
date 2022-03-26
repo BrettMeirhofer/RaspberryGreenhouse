@@ -14,7 +14,13 @@ app.config["DEBUG"] = False  # allow to show errors in browser
 # If an id is provided the details of a specific animal are retrieved
 @app.route('/', methods=['GET'])
 def home():
-    return render_template("index.html")
+    resp = flask.Response(render_template("index.html"))
+    resp.headers["Pragma-directive"] = "no-cache"
+    resp.headers["Cache-directive"] = "no-cache"
+    resp.headers["Cache-control"] = "no-cache"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = 0
+    return resp
 
 
 @app.route('/control', methods=['POST'])

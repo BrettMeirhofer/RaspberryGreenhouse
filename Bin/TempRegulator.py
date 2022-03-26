@@ -26,18 +26,17 @@ def handle_temp():
     GPIO.output(27, GPIO.HIGH)
     i2c = board.I2C()  # uses board.SCL and board.SDA
     tca = adafruit_tca9548a.TCA9548A(i2c)
-    multi_ports = [1]
 
     temps = []
     current_date = datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M")
     temp_json = {"date": current_date, "readings": []}
 
-    for index, port in enumerate(multi_ports):
-        sensor = adafruit_ahtx0.AHTx0(tca[port])
+    for sensor_config in config_dict["temp_sensors"]:
+        sensor = adafruit_ahtx0.AHTx0(tca[sensor_config["port"]])
         sensor_temp = round(sensor.temperature, 1)
         sensor_humd = round(sensor.relative_humidity, 1)
-        temp_json["readings"].append({"r": sensor_temp, "s": 8})
-        temp_json["readings"].append({"r": sensor_humd, "s": 9})
+        temp_json["readings"].append({"r": sensor_temp, "s": sensor_config["temp_id"]})
+        temp_json["readings"].append({"r": sensor_humd, "s": sensor_config["humd_id"]})
         temps.append(sensor_temp)
 
     enable_heater = temps[0] < config_dict["heater_temp"]

@@ -12,17 +12,19 @@ import requests
 import pytz
 
 
+# Reads and uploads values from analog sensors
 def check_soil():
-    soil_ids = [5, 6, 7]
-    logger = GHF.create_logger("CheckSoil")
-    web_json = {"date": datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M"), "readings": []}
+    logger = GHF.create_logger("CheckADC")
+    config_dict = GHF.open_config_dict("Config.json")
+
     spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
     cs = digitalio.DigitalInOut(board.D7)
     mcp = MCP.MCP3008(spi, cs)
-    soil_channels = [MCP.P0, MCP.P0, MCP.P0]
-    for index, channel in enumerate(soil_channels):
-        sensor = AnalogIn(mcp, channel)
-        web_json["readings"].append({"r": sensor.value, "s": soil_ids[index]})
+    web_json = {"date": GHF.c_date(), "readings": []}
+
+    for sensor in config_dict["adc_sensors"]:
+        sensor = AnalogIn(mcp, getattr(MCP, sensor["port"]))
+        web_json["readings"].append({"r": sensor.value, "s": sensor["ID"]})
 
     try:
         send_sensor_data(web_json, "/admin/upload_readings/")
