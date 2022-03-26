@@ -22,9 +22,9 @@ def check_adc():
     mcp = MCP.MCP3008(spi, cs)
     web_json = {"date": GHF.c_date(), "readings": []}
 
-    for sensor in config_dict["adc_sensors"]:
-        sensor = AnalogIn(mcp, getattr(MCP, sensor["port"]))
-        web_json["readings"].append({"r": sensor.value, "s": sensor["id"]})
+    for sensor_config in config_dict["adc_sensors"]:
+        sensor = AnalogIn(mcp, getattr(MCP, sensor_config["port"]))
+        web_json["readings"].append({"r": sensor.value, "s": sensor_config["id"]})
 
     try:
         send_sensor_data(web_json, "/admin/upload_readings/")
