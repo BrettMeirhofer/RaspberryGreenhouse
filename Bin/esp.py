@@ -1,5 +1,6 @@
 import time
 
+"""
 try:
     import pexpect
 except ImportError:
@@ -34,3 +35,22 @@ class Esp:
 
 my_esp = Esp("30:C6:F7:0B:4E:D6")
 my_esp.write_data("31")
+#gatttool -b 30:C6:F7:0B:4E:D6 -I
+gatttool -t random -b 30:C6:F7:0B:4E:D6 -I
+connect 30:C6:F7:0B:4E:D6
+"""
+
+
+
+import socket
+
+serverMACAddress = '30:C6:F7:0B:4E:D6'
+port = 3
+s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
+s.connect((serverMACAddress, port))
+while 1:
+    text = input()
+    if text == "quit":
+        break
+    s.send(bytes(text, 'UTF-8'))
+s.close()
