@@ -1,6 +1,6 @@
 import time
 
-"""
+
 try:
     import pexpect
 except ImportError:
@@ -16,7 +16,7 @@ class Esp:
         self.gatt = pexpect.spawn('gatttool -I')
         self.mac = mac
 
-    def write_data(self, data):
+    def read_data(self, handle):
         self.gatt.sendline(f"connect {self.mac}")
         try:
             self.gatt.expect("Connection successful", timeout=5)
@@ -25,7 +25,7 @@ class Esp:
             return
 
         print("Connection success")
-        line = f"char-write-cmd {data}"
+        line = f"char-read-cmd {handle}"
         print(line)
         self.gatt.sendline(line)
         self.gatt.expect(".*")
@@ -34,23 +34,10 @@ class Esp:
 
 
 my_esp = Esp("30:C6:F7:0B:4E:D6")
-my_esp.write_data("31")
+my_esp.read_data("0x0005")
 #gatttool -b 30:C6:F7:0B:4E:D6 -I
-gatttool -t random -b 30:C6:F7:0B:4E:D6 -I
-connect 30:C6:F7:0B:4E:D6
-"""
-
-
-
-import socket
-
-serverMACAddress = '30:C6:F7:0B:4E:D6'
-port = 3
-s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
-s.connect((serverMACAddress, port))
-while 1:
-    text = input()
-    if text == "quit":
-        break
-    s.send(bytes(text, 'UTF-8'))
-s.close()
+#gatttool -t random -b 30:C6:F7:0B:4E:D6 -I
+#connect 30:C6:F7:0B:4E:D6
+#9C:04:A0:95:19:96
+bluetoothctl pair 30:C6:F7:0B:4E:D6
+#gatttool -b 9C:04:A0:95:19:96 -I
