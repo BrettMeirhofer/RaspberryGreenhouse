@@ -46,6 +46,7 @@ my_esp.read_data("0x0015")
 #char-read-hnd 0x0016
 """
 
+
 import pygatt
 
 # The BGAPI backend will attempt to auto-discover the serial device name of the
@@ -56,6 +57,8 @@ try:
     adapter.start()
     device = adapter.connect('34:94:54:25:E3:12')
     value = device.char_read("00002a6e-0000-1000-8000-00805f9b34fb")
-    print(value)
+    print(int(value[0]))
 finally:
     adapter.stop()
+
+
