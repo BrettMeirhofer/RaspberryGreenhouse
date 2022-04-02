@@ -1,3 +1,4 @@
+"""
 import time
 
 
@@ -44,3 +45,24 @@ my_esp.read_data("0x0015")
 #bluetoothctl pair 30:C6:F7:0B:4E:D6
 #gatttool -b 9C:04:A0:95:19:96 -I
 #char-read-hnd 0x0016
+"""
+
+
+
+#!/usr/bin/env python
+from __future__ import print_function
+
+import binascii
+import pygatt
+
+YOUR_DEVICE_ADDRESS = "34:94:54:25:E3:12"
+# Many devices, e.g. Fitbit, use random addressing - this is required to
+# connect.
+ADDRESS_TYPE = pygatt.BLEAddressType.public
+
+adapter = pygatt.GATTToolBackend()
+adapter.start()
+device = adapter.connect(YOUR_DEVICE_ADDRESS, address_type=ADDRESS_TYPE)
+
+for uuid in device.discover_characteristics().keys():
+    print("Read UUID %s: %s" % (uuid, binascii.hexlify(device.char_read(uuid))))
