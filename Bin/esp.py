@@ -8,7 +8,7 @@ except ImportError:
 
 
 class Esp:
-    mac = "9C:04:A0:95:19:96"
+    mac = ""
 
     gatt = None
 
@@ -33,11 +33,13 @@ class Esp:
         self.gatt.expect(".*")
 
 
-my_esp = Esp("30:C6:F7:0B:4E:D6")
-my_esp.read_data("0x0005")
-#gatttool -b 30:C6:F7:0B:4E:D6 -I
+my_esp = Esp("34:94:54:25:E3:12")
+my_esp.read_data("0x0016")
+
+#gatttool -b 34:94:54:25:E3:12 -I
 #gatttool -t random -b 30:C6:F7:0B:4E:D6 -I
 #connect 30:C6:F7:0B:4E:D6
 #9C:04:A0:95:19:96
-bluetoothctl pair 30:C6:F7:0B:4E:D6
+#bluetoothctl pair 30:C6:F7:0B:4E:D6
 #gatttool -b 9C:04:A0:95:19:96 -I
+#char-read-hnd 0x0016
