@@ -27,9 +27,9 @@ class Esp:
         print("Connection success")
         line = f"char-read-cmd {handle}"
         self.gatt.sendline(line)
+        self.gatt.expect(".*")
         print(self.gatt.before)
         print(self.gatt.after)
-        self.gatt.expect(".*")
         self.gatt.sendline("disconnect")
         self.gatt.expect(".*")
 
