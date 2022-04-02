@@ -34,7 +34,7 @@ class Esp:
 
 
 my_esp = Esp("34:94:54:25:E3:12")
-my_esp.read_data("0x0016")
+my_esp.read_data("0x0015")
 
 #gatttool -b 34:94:54:25:E3:12 -I
 #gatttool -t random -b 30:C6:F7:0B:4E:D6 -I
