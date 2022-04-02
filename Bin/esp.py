@@ -28,9 +28,10 @@ class Esp:
         line = f"char-read-cmd {handle}"
         self.gatt.sendline(line)
         self.gatt.expect(".*")
+        print(self.gatt.before)
+        print(self.gatt.after)
         self.gatt.sendline("disconnect")
         self.gatt.expect(".*")
-        print(self.gatt.read())
 
 
 my_esp = Esp("34:94:54:25:E3:12")
