@@ -98,7 +98,7 @@ def create_logger(name):
 
 
 def open_config_dict(file_name):
-    base_path = path.join(path.dirname(path.dirname(__file__)), "Config")
+    base_path = path.join(path.dirname(path.dirname(path.dirname(__file__))), "Config")
     config_path = path.join(base_path, file_name)
     if not exists(config_path):
         default_path = path.join(base_path, "Default", "Default" + file_name)
