@@ -5,6 +5,8 @@ try:
 except ImportError:
     pass
 
+import pygatt
+
 
 def int_to_hex(intv):
     h = hex(intv).replace("0x", "")
@@ -37,6 +39,7 @@ class Bulb:
         self.mac = mac
 
     def write_data(self, data):
+        """
         self.gatt.sendline(f"connect {self.mac}")
         try:
                 self.gatt.expect("Connection successful", timeout=5)
@@ -51,6 +54,17 @@ class Bulb:
         self.gatt.expect(".*")
         self.gatt.sendline("disconnect")
         self.gatt.expect(".*")
+        """
+
+        adapter = pygatt.GATTToolBackend()
+
+        try:
+            adapter.start()
+            device = adapter.connect(self.mac)
+            device.char_write_handle(self.handle_hex, data)
+            #value = device.char_read("00002a6e-0000-1000-8000-00805f9b34fb")
+        finally:
+            adapter.stop()
 
     def flicker(self):
         for x in range(5):
