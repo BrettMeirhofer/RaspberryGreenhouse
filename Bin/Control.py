@@ -13,6 +13,9 @@ if __name__ == '__main__':
     if command == "relay":
         GHF.toggle_relay(sys.argv[2], int(sys.argv[3]))
 
+    if command == "device":
+        GHF.toggle_device(sys.argv[2], int(sys.argv[3]))
+
     if command == "state":
         print(GHF.list_gpio_state())
 
