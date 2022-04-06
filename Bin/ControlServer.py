@@ -1,10 +1,8 @@
 import flask
-from flask import request, Response, render_template
+from flask import request, render_template
 import json
-import GreenhouseFuncs as GHF
-from bluetooth import Bulb
-from time import time
-
+from Bin.helper import GreenhouseFuncs as GHF
+from Bin.helper.bluetooth import Bulb
 
 app = flask.Flask(__name__)  # sets up the application
 app.config["DEBUG"] = False  # allow to show errors in browser

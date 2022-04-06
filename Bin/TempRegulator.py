@@ -1,8 +1,7 @@
 import datetime
-import GreenhouseFuncs as GHF
-from SendData import send_sensor_data
+from Bin.helper import GreenhouseFuncs as GHF
+from Bin.helper.SendData import send_sensor_data
 import requests
-import json
 import pytz
 import sys
 
@@ -64,7 +63,7 @@ def send_heater_status(logger, heater_json):
 # Physically controls the on/off state of heater
 def toggle_heater(logger, config_dict, enable_heater):
     try:
-        GHF.toggle_relay(config_dict["heater_relay"], enable_heater)
+        GHF.toggle_device(config_dict["heater_relay"], enable_heater)
     except requests.exceptions.RequestException:
         logger.error("Relay Control Failed")
 

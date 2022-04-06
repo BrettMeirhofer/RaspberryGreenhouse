@@ -1,6 +1,6 @@
 import requests
 import json
-import GreenhouseFuncs as GHF
+from Bin.helper import GreenhouseFuncs as GHF
 
 
 def send_sensor_data(json_data, endpoint):

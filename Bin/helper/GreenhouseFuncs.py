@@ -47,19 +47,6 @@ def toggle_relay(relay_id, state):
 """
 
 
-# Toggles a gpio based on the relay id
-def toggle_relay(relay_id, state):
-    gpio_dict = {1: 6, 2: 13, 3: 19, 4: 26}
-    target_pin = gpio_dict[int(relay_id)]
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(target_pin, GPIO.OUT)
-    if state:
-        GPIO.output(target_pin, GPIO.LOW)
-    else:
-        GPIO.output(target_pin, GPIO.HIGH)
-
-
 # Toggles a gpio pin directly
 def toggle_gpio(target_pin, state):
     GPIO.setwarnings(False)
@@ -95,7 +82,7 @@ def create_logger(name):
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
     # set up the logfile handler
-    log_path = path.join(path.dirname(__file__), "../Logs")
+    log_path = path.join(path.dirname(__file__), "../../Logs")
     log_filename = path.join(log_path, name + ".log")
     fh = logging.FileHandler(log_filename)
     fh.setLevel(logging.INFO)

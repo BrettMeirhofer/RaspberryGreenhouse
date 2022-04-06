@@ -1,13 +1,9 @@
 import os
-import datetime
 import time
-import SendData
-import GreenhouseFuncs as GHF
-import pytz
+from Bin.helper import GreenhouseFuncs as GHF
 
 
-# ffmpeg seems to need a light and dark calibration image before a good image is produced
-# Three pictures are taken while only the 3rd is uploaded
+#
 def take_picture():
     logger = GHF.create_logger("Stream")
     config_dict = GHF.open_config_dict("Config.json")

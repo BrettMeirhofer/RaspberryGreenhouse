@@ -54,8 +54,6 @@ import pygatt
 # attached BGAPI-compatible USB adapter.
 
 
-
-
 def get_esp_sonar():
     adapter = pygatt.GATTToolBackend()
 

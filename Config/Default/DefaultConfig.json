@@ -4,19 +4,22 @@
   "too_hot": 38,
   "too_cold": 4.5,
   "relay_ip": "192.168.1.179",
-  "heater_relay": 3,
-  "pump_relay": 2,
+  "heater_relay": "heater1",
+  "pump_relay": "pump1",
   "heating": 0,
+  "watering_skip": [],
   "colors": ["ffffff","ff0000", "00ff00", "0000ff", "ffff00", "00ffff", "ff00ff"],
   "devices": [
     {
       "name": "heater1",
       "gpio": 19,
-      "web_id": 1
+      "web_id": 1,
+      "default": 0
     },
     {
       "name": "pump1",
-      "gpio": 13
+      "gpio": 13,
+      "default": 0
     },
     {
       "name": "light1",
@@ -39,6 +42,4 @@
   ],
   "adc_sensors": [
     {"id": 5, "port": "P0"},
-    {"id": 16, "port": "P2"}
-  ]
-}
+    {"id": 1

@@ -1,17 +1,11 @@
-import time
-import GreenhouseFuncs as GHF
+from Bin.helper import GreenhouseFuncs as GHF
 import sys
-from bluetooth import Bulb
-from bluetooth import get_rgb_hex
-
+from Bin.helper.bluetooth import Bulb
 
 # Allows for manual deployment of relay commands without using the browser
 if __name__ == '__main__':
     logger = GHF.create_logger("Control")
     command = sys.argv[1]
-
-    if command == "relay":
-        GHF.toggle_relay(sys.argv[2], int(sys.argv[3]))
 
     if command == "device":
         GHF.toggle_device(sys.argv[2], int(sys.argv[3]))
