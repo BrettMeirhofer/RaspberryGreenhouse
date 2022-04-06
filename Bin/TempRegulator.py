@@ -1,6 +1,6 @@
 import datetime
-from Bin.helper import GreenhouseFuncs as GHF
-from Bin.helper.SendData import send_sensor_data
+from helper import GreenhouseFuncs as GHF
+from helper.SendData import send_sensor_data
 import requests
 import pytz
 import sys

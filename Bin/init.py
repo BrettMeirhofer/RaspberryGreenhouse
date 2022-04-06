@@ -1,4 +1,4 @@
-from Bin.helper import GreenhouseFuncs as GHF
+from helper import GreenhouseFuncs as GHF
 
 
 # Uses the default states in config to update the relay states

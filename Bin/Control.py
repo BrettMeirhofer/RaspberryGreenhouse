@@ -1,6 +1,6 @@
-from Bin.helper import GreenhouseFuncs as GHF
+from helper import GreenhouseFuncs as GHF
 import sys
-from Bin.helper.bluetooth import Bulb
+from helper.bluetooth import Bulb
 
 # Allows for manual deployment of relay commands without using the browser
 if __name__ == '__main__':

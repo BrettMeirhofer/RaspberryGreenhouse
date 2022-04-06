@@ -1,5 +1,5 @@
 import time
-from Bin.helper import GreenhouseFuncs as GHF
+from helper import GreenhouseFuncs as GHF
 
 
 # Toggles a pump on a Tasmota Relay for a duration in order to water plants

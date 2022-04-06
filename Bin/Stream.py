@@ -1,6 +1,6 @@
 import os
 import time
-from Bin.helper import GreenhouseFuncs as GHF
+from helper import GreenhouseFuncs as GHF
 
 
 #

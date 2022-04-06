@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from hcsr04sensor import sensor
-from Bin.helper.SendData import send_sensor_data
-from Bin.helper import GreenhouseFuncs as GHF
+from helper.SendData import send_sensor_data
+from helper import GreenhouseFuncs as GHF
 
 
 # Records water level and sends it to a remote web server

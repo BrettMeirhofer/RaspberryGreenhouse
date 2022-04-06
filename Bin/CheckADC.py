@@ -3,8 +3,8 @@ import digitalio
 import board
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
-from Bin.helper import GreenhouseFuncs as GHF
-from Bin.helper.SendData import send_sensor_data
+from helper import GreenhouseFuncs as GHF
+from helper.SendData import send_sensor_data
 import requests
 
 
