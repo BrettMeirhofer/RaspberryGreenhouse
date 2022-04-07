@@ -48,33 +48,23 @@ gatttool -b 9C:04:A0:95:19:96 -I
 """
 
 
-import pygatt
-
-# The BGAPI backend will attempt to auto-discover the serial device name of the
-# attached BGAPI-compatible USB adapter.
-
-
-def get_esp_sonar():
-    adapter = pygatt.GATTToolBackend()
-
-    try:
-        adapter.start()
-        device = adapter.connect('34:94:54:25:E3:12')
-        value = device.char_read("00002a6e-0000-1000-8000-00805f9b34fb")
-        print(int(value[0]))
-    finally:
-        adapter.stop()
+import asyncio
+from bleak import BleakClient
+import sys
+import time
 
 
-def toggle_esp_relay():
-    adapter = pygatt.GATTToolBackend()
+async def main(address: str):
+    async with BleakClient(address) as client:
+        await client.write_gatt_char(char_specifier="00002a6e-0000-1000-8000-00805f9b34fb", data=b"")
+        time.sleep(1)
+        value = await client.read_gatt_char(char_specifier="00002a6e-0000-1000-8000-00805f9b34fb")
+        print(value)
+        print((int(value[0])))
 
-    try:
-        adapter.start()
-        device = adapter.connect('34:94:54:25:E3:12')
-        value = device.char_read("00002a6e-0000-1000-8000-00805f9b34fb")
-        print(int(value[0]))
-    finally:
-        adapter.stop()
+
+def get_sonar(address):
+    asyncio.run(main(address))
+
 
 

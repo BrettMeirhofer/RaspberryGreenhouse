@@ -35,7 +35,8 @@
     }
   ],
   "level_sensors": [
-    {"id": 4, "echo": 17, "trig": 4}
+    {"id": 4, "echo": 17, "trig": 4},
+    {"id": 4, "ble_addr": "34:94:54:25:E3:12"}
   ],
   "temp_sensors": [
     {"temp_id": 9, "humd_id": 9,"port": 1}
