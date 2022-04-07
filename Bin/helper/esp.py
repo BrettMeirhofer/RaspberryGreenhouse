@@ -59,14 +59,15 @@ async def main(address: str):
         await client.write_gatt_char(char_specifier="00002a6e-0000-1000-8000-00805f9b34fb", data=b"")
         time.sleep(1)
         value = await client.read_gatt_char(char_specifier="00002a6e-0000-1000-8000-00805f9b34fb")
+        print(value)
         return int(value[0])
 
 
 def get_sonar(address):
-    asyncio.run(main(address))
+
 
 
 if __name__ == '__main__':
-    print(get_sonar("34:94:54:25:E3:12"))
+    print(asyncio.run(main("")))
 
 
