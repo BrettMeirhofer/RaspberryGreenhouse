@@ -64,10 +64,10 @@ async def main(address: str):
 
 
 def get_sonar(address):
-
+    asyncio.run(main(address))
 
 
 if __name__ == '__main__':
-    print(asyncio.run(main("")))
+    print(get_sonar("34:94:54:25:E3:12"))
 
 
