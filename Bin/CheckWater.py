@@ -20,10 +20,10 @@ def record_water():
             trig = x["trig"]
             echo = x["echo"]
             measure_object = sensor.Measurement(trig, echo)
-            distance_warm = measure_object.raw_distance()
+            distance_warm = round(measure_object.raw_distance(), 4)
             GPIO.cleanup((trig, echo))
 
-        json_data["readings"].append({"r": round(distance_warm, 4), "s": x["id"]})
+        json_data["readings"].append({"r": distance_warm, "s": x["id"]})
 
     send_sensor_data(json_data, "/admin/upload_readings/")
 
