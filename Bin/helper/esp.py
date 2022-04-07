@@ -67,6 +67,6 @@ def get_sonar(address):
 
 
 if __name__ == '__main__':
-    get_sonar("34:94:54:25:E3:12")
+    print(get_sonar("34:94:54:25:E3:12"))
 
 
