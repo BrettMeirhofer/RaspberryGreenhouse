@@ -25,6 +25,7 @@ def record_water():
 
         json_data["readings"].append({"r": distance_warm, "s": x["id"]})
 
+    print(json_data)
     send_sensor_data(json_data, "/admin/upload_readings/")
 
 
