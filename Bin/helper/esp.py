@@ -64,7 +64,7 @@ async def main(address: str):
 
 
 def get_sonar(address):
-    asyncio.run(main(address))
+    return asyncio.run(main(address))
 
 
 if __name__ == '__main__':
