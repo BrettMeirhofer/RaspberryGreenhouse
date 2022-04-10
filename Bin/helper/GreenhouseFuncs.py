@@ -112,7 +112,7 @@ def open_config_dict(file_name):
 
 
 def update_config_dict(file_name, data):
-    base_path = path.join(path.dirname(path.dirname(__file__)), "Config")
+    base_path = path.join(path.dirname(path.dirname(path.dirname(__file__))), "Config")
     config_path = path.join(base_path, file_name)
 
     with open(config_path, "w") as config_file:
