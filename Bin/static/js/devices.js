@@ -72,7 +72,7 @@ function create_toggles(colors){
                 title.classList.add('title')
                 title.textContent = item.name
                 div.appendChild(title);
-                if (item.type == "direct"){
+                if (item.type == "direct" || item.type == "esp"){
                     status = ""
                     if (item.state == 0){
                         status = "OFF"
