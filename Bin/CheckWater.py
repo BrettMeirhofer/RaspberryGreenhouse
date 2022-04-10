@@ -14,8 +14,8 @@ def record_water():
 
     json_data = {"date": GHF.c_date(), "readings": []}
     for x in config_dict["level_sensors"]:
-        if "ble_addr" in x:
-            distance_warm = esp.get_sonar(x["ble_addr"])
+        if "mac" in x:
+            distance_warm = esp.get_sonar(x["mac"])
         else:
             trig = x["trig"]
             echo = x["echo"]
@@ -25,7 +25,6 @@ def record_water():
 
         json_data["readings"].append({"r": distance_warm, "s": x["id"]})
 
-    print(json_data)
     send_sensor_data(json_data, "/admin/upload_readings/")
 
 

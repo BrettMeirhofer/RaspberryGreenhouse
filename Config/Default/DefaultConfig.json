@@ -1,5 +1,5 @@
 {
-  "watering_duration": 30,
+  "watering_duration": 15,
   "heater_temp": 24,
   "too_hot": 38,
   "too_cold": 4.5,
@@ -8,7 +8,15 @@
   "pump_relay": "pump1",
   "heating": 0,
   "watering_skip": [],
-  "colors": ["ffffff","ff0000", "00ff00", "0000ff", "ffff00", "00ffff", "ff00ff"],
+  "colors": [
+    "ffffff",
+    "ff0000",
+    "00ff00",
+    "0000ff",
+    "ffff00",
+    "00ffff",
+    "ff00ff"
+  ],
   "devices": [
     {
       "name": "heater1",
@@ -32,15 +40,25 @@
     {
       "name": "outlet4",
       "gpio": 26
+    },
+    {
+      "name": "pump2",
+      "type": "esp",
+      "mac": "34:94:54:25:E3:12",
+      "char": ""
     }
   ],
   "level_sensors": [
-    {"id": 4, "echo": 17, "trig": 4},
-    {"id": 4, "ble_addr": "34:94:54:25:E3:12"}
+    {
+      "id": 4,
+      "mac": "34:94:54:25:E3:12"
+    }
   ],
   "temp_sensors": [
-    {"temp_id": 9, "humd_id": 9,"port": 1}
-  ],
-  "adc_sensors": [
-    {"id": 5, "port": "P0"},
-    {"id": 1
+    {
+      "temp_id": 9,
+      "humd_id": 9,
+      "port": 1
+    }
+  ]
+}

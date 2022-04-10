@@ -11,6 +11,7 @@ import pytz
 from os.path import exists
 from email.message import EmailMessage
 from helper.bluetooth import Bulb
+from helper import esp
 
 try:
     import RPi.GPIO as GPIO
@@ -128,13 +129,22 @@ def add_error_flag(flag):
 
 def toggle_device(device, toggle):
     config_dict = open_config_dict("Config.json")
-    for device_config in config_dict["devices"]:
+    for index, device_config in enumerate(config_dict["devices"]):
         if device_config["name"] == device:
-            if "direct" == device_config["type"]:
-                toggle_gpio(device_config["gpio"], toggle)
-            if "bt" in device_config["type"]:
-                bulb = Bulb(device_config["mac"])
-                bulb.set_power(toggle)
+            toggle_target_device(device_config, toggle, config_dict, index)
+            break
+
+
+def toggle_target_device(device_config, toggle, config_dict, index):
+    if "direct" == device_config["type"]:
+        toggle_gpio(device_config["gpio"], toggle)
+    elif "bt" in device_config["type"]:
+        bulb = Bulb(device_config["mac"])
+        bulb.set_power(toggle)
+    elif "esp" in device_config["type"]:
+        esp.update_relay(device_config["mac"], device_config["char"], toggle)
+        config_dict["devices"][index]["state"] = toggle
+        update_config_dict("Config.json", config_dict)
 
 
 def get_gpio_state(pin):
@@ -142,9 +152,19 @@ def get_gpio_state(pin):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin, GPIO.OUT)
-        return GPIO.input(pin)
+        return not GPIO.input(pin)
     except NameError:
         return 0
+
+
+def get_device_state(device):
+    if device["type"] == "direct":
+        return get_gpio_state(device["gpio"])
+    elif device["type"] == "esp":
+        return device["state"]
+    else:
+        state = "NA"
+        return "NA"
 
 
 def list_gpio_state():

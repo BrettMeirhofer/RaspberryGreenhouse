@@ -40,12 +40,9 @@ def lights_on():
 def get_toggles():
     config_dict = GHF.open_config_dict("Config.json")
     output_dict = {"devices": []}
-    for x in config_dict["devices"]:
-        if x["type"] == "direct":
-            state = not GHF.get_gpio_state(x["gpio"])
-        else:
-            state = "NA"
-        output_dict["devices"].append({"name": x["name"], "type": x["type"], "state": state})
+    for device in config_dict["devices"]:
+        state = GHF.get_device_state(device)
+        output_dict["devices"].append({"name": device["name"], "type": device["type"], "state": state})
     return json.dumps(output_dict)
 
 
