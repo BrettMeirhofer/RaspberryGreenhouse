@@ -59,24 +59,6 @@ def toggle_gpio(target_pin, state):
         GPIO.output(target_pin, GPIO.HIGH)
 
 
-def get_data_file(file_name):
-    data_file_path = file_name + datetime.datetime.now().strftime("%Y%m%d") + ".csv"
-    data_file_path = path.join(path.dirname(__file__), "../Data", data_file_path)
-    headers = ["Sensor", "Temp", "Humd", "Datetime"]
-    if path.exists(data_file_path):
-        mode = "a"
-    else:
-        mode = "w"
-
-    data_file = open(data_file_path, mode)
-    writer = csv.writer(data_file)
-
-    if not path.exists(data_file_path):
-        writer.writerow(headers)
-
-    return data_file, writer
-
-
 def create_logger(name):
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
