@@ -5,7 +5,6 @@ try:
 except ImportError:
     pass
 
-import pygatt
 
 
 def int_to_hex(intv):
