@@ -4,6 +4,7 @@ from helper import esp
 
 # Uses the default states in config to update the relay states
 def default_relays():
+    logger = GHF.create_logger("Defaults")
     config_dict = GHF.open_config_dict("Config.json")
     for index, device_config in enumerate(config_dict["devices"]):
         if "default" in device_config:

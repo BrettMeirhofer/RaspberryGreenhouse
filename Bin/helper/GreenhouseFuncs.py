@@ -163,7 +163,6 @@ def get_device_state(device):
     elif device["type"] == "esp":
         return device["state"]
     else:
-        state = "NA"
         return "NA"
 
 
