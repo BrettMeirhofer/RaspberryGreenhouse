@@ -15,7 +15,7 @@ def home():
     resp = flask.Response(render_template("index.html"))
     resp.headers["Pragma-directive"] = "no-cache"
     resp.headers["Cache-directive"] = "no-cache"
-    resp.headers["Cache-control"] = "no-cache"
+    resp.headers["Cache-control"] = "no-cache, no-store"
     resp.headers["Pragma"] = "no-cache"
     resp.headers["Expires"] = 0
     return resp
