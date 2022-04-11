@@ -22,3 +22,5 @@ A series of python scripts that can be scheduled using crontab on a raspberry pi
 - Weekly email reports
 - Sharing greenhouse config details with remote
 
+# Images
+![image](https://user-images.githubusercontent.com/78938784/162798013-4619ede6-e963-430e-b541-e969fedfb3b4.png)
