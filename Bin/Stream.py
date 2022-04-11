@@ -13,7 +13,7 @@ def take_picture():
         overwrite = ""
         if os.path.exists(target_path):
             overwrite = " -y"
-        command = "ffmpeg{} v4l2 -video_size 1280x720 -i {} -frames 1 {}".format(overwrite, camera["sys"], target_path)
+        command = "ffmpeg{} -f v4l2 -video_size 1280x720 -i {} -frames 1 {}".format(overwrite, camera["sys"], target_path)
         os.system(command)
         time.sleep(.1)
 
