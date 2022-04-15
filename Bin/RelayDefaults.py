@@ -6,7 +6,7 @@ from helper import esp
 def default_relays():
     logger = GHF.create_logger("Defaults")
     config_dict = GHF.open_config_dict("Config.json")
-    for index, device_config in enumerate(config_dict["devices"]):
+    for index, device_config in enumerate(config_dict["devices"].values()):
         if "default" in device_config:
             GHF.toggle_target_device(device_config, device_config["default"], config_dict, index)
 

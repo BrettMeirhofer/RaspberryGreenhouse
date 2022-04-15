@@ -19,10 +19,13 @@ except ImportError:
     pass
 
 
+# Converts celsius to fahrenheit
 def c_to_f(temp):
     return (temp * 9/5) + 32
 
 
+# Sends an email with the specified title and message
+# No longer works with gmail due to increased security requirements
 def send_email(subject, message):
     port = 465  # For SSL
     email_config = open_config_dict("EmailConfig.json")
@@ -38,15 +41,6 @@ def send_email(subject, message):
         server.login(email_config["sender"], email_config["sender-pw"])
         server.send_message(msg)
 
-"""
-# Used to control a tasmota relay on the local network
-def toggle_relay(relay_id, state):
-    config_dict = open_config_dict("Config.json")
-    ip_address = config_dict["relay_ip"]
-    target_url = "http://{}/cm?cmnd=Power{}%20{}".format(ip_address, relay_id, state)
-    requests.get(url=target_url)
-"""
-
 
 # Toggles a gpio pin directly
 def toggle_gpio(target_pin, state):
@@ -59,6 +53,7 @@ def toggle_gpio(target_pin, state):
         GPIO.output(target_pin, GPIO.HIGH)
 
 
+# Creates a logger with the specified name to intercept uncaught errors and write them
 def create_logger(name):
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
@@ -80,6 +75,8 @@ def create_logger(name):
     return logger
 
 
+# Opens a config json with the specified name and stores it as as a dict
+# Copies a default config json into the config dir if file not found
 def open_config_dict(file_name):
     base_path = path.join(path.dirname(path.dirname(path.dirname(__file__))), "Config")
     config_path = path.join(base_path, file_name)
@@ -93,14 +90,17 @@ def open_config_dict(file_name):
     return config_dict
 
 
+# Used for storing persistent data
+# Replace with persistent if save data needs expand
 def update_config_dict(file_name, data):
     base_path = path.join(path.dirname(path.dirname(path.dirname(__file__))), "Config")
     config_path = path.join(base_path, file_name)
 
     with open(config_path, "w") as config_file:
-        config_file.write(json.dumps(data))
+        json.dump(config_file, data, indent=4, sort_keys=True)
 
 
+# Error flags indicate the system is currently in an error state and to not send additional emails
 def add_error_flag(flag):
     errors = open_config_dict("Errors.json")
 
@@ -109,15 +109,16 @@ def add_error_flag(flag):
         update_config_dict("Errors.json", errors)
 
 
+# Toggle an arbitrary device using a name
 def toggle_device(device, toggle):
     config_dict = open_config_dict("Config.json")
-    for index, device_config in enumerate(config_dict["devices"]):
-        if device_config["name"] == device:
-            toggle_target_device(device_config, toggle, config_dict, index)
-            break
+    if device in config_dict["devices"]:
+        device_config = config_dict["devices"][device]
+        toggle_target_device(device_config, toggle, config_dict, device)
 
 
-def toggle_target_device(device_config, toggle, config_dict, index):
+# Toggle an arbitrary device using it's config information
+def toggle_target_device(device_config, toggle, config_dict, device_name):
     if "direct" == device_config["type"]:
         toggle_gpio(device_config["gpio"], toggle)
     elif "bt" in device_config["type"]:
@@ -125,10 +126,11 @@ def toggle_target_device(device_config, toggle, config_dict, index):
         bulb.set_power(toggle)
     elif "esp" in device_config["type"]:
         esp.update_relay(device_config["mac"], device_config["char"], toggle)
-        config_dict["devices"][index]["state"] = toggle
+        config_dict["devices"][device_name]["state"] = toggle
         update_config_dict("Config.json", config_dict)
 
 
+# Gets the state of a physical pin on the board
 def get_gpio_state(pin):
     try:
         GPIO.setwarnings(False)
@@ -139,6 +141,7 @@ def get_gpio_state(pin):
         return 0
 
 
+# Gets the state of an arbitrary device
 def get_device_state(device):
     if device["type"] == "direct":
         return get_gpio_state(device["gpio"])
@@ -148,11 +151,6 @@ def get_device_state(device):
         return "NA"
 
 
-def list_gpio_state():
-    gpio_dict = [6,13,19,26]
-    for gpio in gpio_dict:
-        print("gpio {}: state {}".format(gpio, get_gpio_state(gpio)))
-
-
+# Gets the current data in UTC-0
 def c_date():
     return datetime.datetime.now(tz=pytz.UTC).strftime("%Y%m%d%H%M")

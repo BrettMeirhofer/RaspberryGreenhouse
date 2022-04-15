@@ -40,7 +40,7 @@ def lights_on():
 def get_toggles():
     config_dict = GHF.open_config_dict("Config.json")
     output_dict = {"devices": []}
-    for device in config_dict["devices"]:
+    for device in config_dict["devices"].values():
         state = GHF.get_device_state(device)
         output_dict["devices"].append({"name": device["name"], "type": device["type"], "state": state})
     return json.dumps(output_dict)
@@ -50,11 +50,6 @@ def get_toggles():
 def get_colors():
     config_dict = GHF.open_config_dict("Config.json")
     return json.dumps({"colors": config_dict["colors"]})
-
-
-
-
-
 
 
 GHF.create_logger("ControlServer")

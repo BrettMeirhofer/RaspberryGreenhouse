@@ -17,37 +17,18 @@
     "00ffff",
     "ff00ff"
   ],
-  "devices": [
-    {
-      "name": "heater1",
-      "gpio": 19,
-      "web_id": 1,
-      "default": 0
-    },
-    {
-      "name": "pump1",
-      "gpio": 13,
-      "default": 0
-    },
-    {
+  "devices": {
+    "light1": {
       "name": "light1",
       "mac": "9C:04:A0:95:19:96"
     },
-    {
-      "name": "outlet1",
-      "gpio": 6
-    },
-    {
-      "name": "outlet4",
-      "gpio": 26
-    },
-    {
+    "pump2": {
       "name": "pump2",
       "type": "esp",
       "mac": "34:94:54:25:E3:12",
       "char": ""
     }
-  ],
+  },
   "level_sensors": [
     {
       "id": 4,
