@@ -7,7 +7,7 @@
   "heater_relay": "heater1",
   "pump_relay": "pump1",
   "heating": 0,
-  "watering_skip": [],
+  "watering": 0,
   "colors": [
     "ffffff",
     "ff0000",
