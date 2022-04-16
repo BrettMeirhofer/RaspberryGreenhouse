@@ -39,7 +39,7 @@ class TasmotaDevice(Device):
         toggle_map = {"ON": 1, "OFF": 0}
         relay = "POWER" + str(self.relay_id)
         target_url = "http://{}/cm?cmnd=".format(self.ip_address) + relay
-        key = json.loads(requests.get(url=target_url).json())[relay]
+        key = requests.get(url=target_url).json()[relay]
         return toggle_map[key]
         
 
