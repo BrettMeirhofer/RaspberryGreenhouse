@@ -98,7 +98,7 @@ def update_config_dict(file_name, data):
     config_path = path.join(base_path, file_name)
 
     with open(config_path, "w") as config_file:
-        json.dump(config_file, data, indent=4, sort_keys=True)
+        json.dump(obj=data, fp=config_file, indent=4, sort_keys=True)
 
 
 # Error flags indicate the system is currently in an error state and to not send additional emails

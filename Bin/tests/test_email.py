@@ -1,3 +1,3 @@
-import GreenhouseFuncs as GHF
+"""import GreenhouseFuncs as GHF
 
-GHF.send_email("Greenhouse Overheating", "Greenhouse temperature is high")
+GHF.send_email("Greenhouse Overheating", "Greenhouse temperature is high")"""

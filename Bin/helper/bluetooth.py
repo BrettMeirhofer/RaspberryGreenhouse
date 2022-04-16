@@ -6,7 +6,6 @@ except ImportError:
     pass
 
 
-
 def int_to_hex(intv):
     h = hex(intv).replace("0x", "")
     while len(h) < 2:
