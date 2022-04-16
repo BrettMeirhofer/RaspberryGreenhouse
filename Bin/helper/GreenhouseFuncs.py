@@ -12,6 +12,7 @@ from os.path import exists
 from email.message import EmailMessage
 from helper.bluetooth import Bulb
 from helper import esp
+from helper import devices
 
 try:
     import RPi.GPIO as GPIO
@@ -128,6 +129,11 @@ def toggle_target_device(device_config, toggle, config_dict, device_name):
         esp.update_relay(device_config["mac"], device_config["char"], toggle)
         config_dict["devices"][device_name]["state"] = toggle
         update_config_dict("Config.json", config_dict)
+    elif "tasmota" in device_config["type"]:
+        my_device = devices.TasmotaDevice()
+        my_device.ip_address = device_config["ip"]
+        my_device.relay_id = device_config["port"]
+        my_device.set_state(toggle)
 
 
 # Gets the state of a physical pin on the board

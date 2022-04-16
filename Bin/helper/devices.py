@@ -1,4 +1,3 @@
-import helper.GreenhouseFuncs as GHF
 import requests
 from helper import esp
 from helper.bluetooth import Bulb
