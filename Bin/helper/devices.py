@@ -1,6 +1,7 @@
 import requests
 from helper import esp
 from helper.bluetooth import Bulb
+import json
 
 
 try:
@@ -34,6 +35,13 @@ class TasmotaDevice(Device):
         target_url = "http://{}/cm?cmnd=Power{}%20{}".format(self.ip_address, self.relay_id, state)
         requests.get(url=target_url)
 
+    def read_state(self):
+        toggle_map = {"ON": 1, "OFF": 0}
+        relay = "POWER" + str(self.relay_id)
+        target_url = "http://{}/cm?cmnd=" + relay
+        key = json.loads(requests.get(url=target_url).json())[relay]
+        return toggle_map[key]
+        
 
 # Device that can be controlled via GPIO pins
 class GPIODevice(Device):

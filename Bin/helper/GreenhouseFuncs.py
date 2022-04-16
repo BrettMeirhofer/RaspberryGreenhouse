@@ -153,6 +153,11 @@ def get_device_state(device):
         return get_gpio_state(device["gpio"])
     elif device["type"] == "esp":
         return device["state"]
+    elif device["type"] == "tasmota":
+        my_device = devices.TasmotaDevice()
+        my_device.ip_address = device["ip"]
+        my_device.relay_id = device["port"]
+        my_device.read_state()
     else:
         return "NA"
 
