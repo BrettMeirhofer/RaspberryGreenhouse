@@ -72,7 +72,7 @@ function create_toggles(colors){
                 title.classList.add('title')
                 title.textContent = item.name
                 div.appendChild(title);
-                if (item.state != "NA" ){
+                if (item.state == 0 || item.state == 1){
                     status = ""
                     if (item.state == 0){
                         status = "OFF"
