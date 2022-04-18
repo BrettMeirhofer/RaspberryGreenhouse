@@ -157,7 +157,7 @@ def get_device_state(device):
         my_device = devices.TasmotaDevice()
         my_device.ip_address = device["ip"]
         my_device.relay_id = device["port"]
-        my_device.read_state()
+        return my_device.read_state()
     else:
         return "NA"
 
