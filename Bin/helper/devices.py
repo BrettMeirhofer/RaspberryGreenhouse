@@ -35,7 +35,7 @@ class TasmotaDevice(Device):
         try:
             target_url = "http://{}/cm?cmnd=Power{}%20{}".format(self.ip_address, self.relay_id, state)
             requests.get(url=target_url)
-        except ConnectionError:
+        except requests.ConnectionError:
             pass
 
     def read_state(self):
@@ -46,7 +46,7 @@ class TasmotaDevice(Device):
             key = requests.get(url=target_url).json()[relay]
             return toggle_map[key]
 
-        except ConnectionError:
+        except requests.ConnectionError:
             return "NA"
         
 
