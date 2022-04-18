@@ -32,15 +32,22 @@ class TasmotaDevice(Device):
     ip_address = ""
 
     def set_state(self, state):
-        target_url = "http://{}/cm?cmnd=Power{}%20{}".format(self.ip_address, self.relay_id, state)
-        requests.get(url=target_url)
+        try:
+            target_url = "http://{}/cm?cmnd=Power{}%20{}".format(self.ip_address, self.relay_id, state)
+            requests.get(url=target_url)
+        except ConnectionError:
+            pass
 
     def read_state(self):
-        toggle_map = {"ON": 1, "OFF": 0}
-        relay = "POWER" + str(self.relay_id)
-        target_url = "http://{}/cm?cmnd=".format(self.ip_address) + relay
-        key = requests.get(url=target_url).json()[relay]
-        return toggle_map[key]
+        try:
+            toggle_map = {"ON": 1, "OFF": 0}
+            relay = "POWER" + str(self.relay_id)
+            target_url = "http://{}/cm?cmnd=".format(self.ip_address) + relay
+            key = requests.get(url=target_url).json()[relay]
+            return toggle_map[key]
+
+        except ConnectionError:
+            return "NA"
         
 
 # Device that can be controlled via GPIO pins
