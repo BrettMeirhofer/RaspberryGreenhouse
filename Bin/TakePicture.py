@@ -16,7 +16,7 @@ def take_picture():
         for x in range(3):
             file_name = camera["name"] + current_time + str(x) + ".png"
             target_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Images", file_name)
-            command = "ffmpeg -f v4l2 -video_size 1280x720 -i {} -frames 1 {}".format(camera["sys"], target_path)
+            command = 'ffmpeg -f v4l2 -vf "vflip" -video_size 1280x720 -i {} -frames 1 {}'.format(camera["sys"], target_path)
             os.system(command)
             time.sleep(1)
         time.sleep(1)
