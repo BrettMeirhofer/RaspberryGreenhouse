@@ -60,11 +60,10 @@ class GPIODevice(Device):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         if state:
-			GPIO.output(self.pin, GPIO.HIGH)
+            GPIO.output(self.pin, GPIO.HIGH)
         else:
-			GPIO.output(self.pin, GPIO.LOW)
+            GPIO.output(self.pin, GPIO.LOW)
             
-
     def read_state(self):
         try:
             GPIO.setwarnings(False)
