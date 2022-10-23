@@ -19,7 +19,7 @@ def get_sonar(address):
 
 async def async_update_relay(address, char, state):
     async with BleakClient(address) as client:
-        payload = str(1 - state).encode("UTF-8")
+        payload = str(state).encode("UTF-8")
         await client.write_gatt_char(char_specifier=char, data=payload)
 
 
